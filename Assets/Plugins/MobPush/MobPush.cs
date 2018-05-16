@@ -17,11 +17,19 @@ namespace com.mob.mobpush{
 		public OnDemoReqCallback onDemoReqCallback;
 
 		void Awake() {
-			mobPushImpl = new AndroidImpl (gameObject);
-			mobPushImpl.initPushSDK (appKey, appSecret);
-			mobPushImpl.addPushReceiver ();
-		}
+			#if UNITY_IPHONE
 
+				mobPushImpl = new iOSMobPushImpl (gameObject);
+				
+
+			#elif UNITY_ANDROID
+				mobPushImpl = new AndroidImpl (gameObject);
+				mobPushImpl.initPushSDK (appKey, appSecret);
+			#endif
+
+				mobPushImpl.addPushReceiver ();
+			
+		}
 
 		private void _MobPushCallback (string data) {
 			if (data == null) {
@@ -34,6 +42,7 @@ namespace com.mob.mobpush{
 				return;
 			}
 			int action = Convert.ToInt32(res["action"]);
+			// 0 自定义消息 1 收到 2 点击
 			if (action == 0 || action == 1 || action == 2) {
 				if (onNotifyCallback != null) {
 					Hashtable result = (Hashtable) res["result"];
@@ -87,6 +96,12 @@ namespace com.mob.mobpush{
 			}
 		}
 
+		public void setAPNsForProduction (bool isPro)
+		{
+			#if UNITY_IPHONE
+			mobPushImpl.setAPNsForProduction(isPro);
+			#endif
+		}
 
 		public void initPushSDK(string appKey, string appScrect) {
 			mobPushImpl.initPushSDK (appKey, appSecret);
@@ -96,12 +111,7 @@ namespace com.mob.mobpush{
 			mobPushImpl.addPushReceiver ();
 		}
 
-		public void setAPNSForProduction(bool isOpen) {
-			#if UNITY_IOS
-			mobPushImpl.setAPNSForProduction (isOpen);
-			#endif
-		}
-
+	
 		public void getRegistrationId() {
 			mobPushImpl.getRegistrationId ();
 		}
@@ -143,9 +153,7 @@ namespace com.mob.mobpush{
 		}
 
 		public void req(int type, string content, int space, string extras) {
-			#if UNITY_ANDROID
-			mobPushImpl.req (type, content, space, extras, 0);
-			#endif
+			mobPushImpl.req (type, content, space, extras);
 		}
 
 		public delegate void OnNotifyCallback (int action, Hashtable resulte);

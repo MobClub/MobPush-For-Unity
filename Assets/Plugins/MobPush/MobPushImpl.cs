@@ -17,11 +17,10 @@ namespace com.mob.mobpush{
 		public abstract void addPushReceiver ();
 
 		/// <summary>
-		/// set APNs For Production (ios only)
+		/// set APNs 环境
 		/// </summary>
-		#if UNITY_IPHONE
-		public abstract void setAPNSForProduction (bool isOpen);
-		#endif
+		public abstract void setAPNsForProduction (bool isPro);
+		
 
 		/// <summary>
 		/// getRegistrationId.
@@ -78,7 +77,7 @@ namespace com.mob.mobpush{
 		/// type notify:1  AppNotify:2  Delayed:3
 		/// iosProduction (ios only)
 		/// </summary>
-		public abstract void req (int type,  String content, int space, String extras, int iosProduction);
+		public abstract void req (int type,  String content, int space, String extras);
 
 	}
 }

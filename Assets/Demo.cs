@@ -17,6 +17,18 @@ public class Demo : MonoBehaviour {
 		mobPush.onAliasCallback = OnAliasHandler;
 		mobPush.onDemoReqCallback = OnDemoReqHandler;
 		mobPush.onRegIdCallback = OnRegIdHandler;
+
+		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom，Android 不用
+		#if UNITY_IPHONE
+
+			// 真机调试 false , 上线 true
+			mobPush.setAPNsForProduction(false);
+
+			CustomNotifyStyle style = new CustomNotifyStyle ();
+			style.setType( (int)(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert) );
+			mobPush.setCustomNotification(style);
+
+		#endif
 	}
 
 	// Update is called once per frame
@@ -63,12 +75,21 @@ public class Demo : MonoBehaviour {
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "Send Locat Notify"))
 		{
 			LocalNotifyStyle style = new LocalNotifyStyle ();
+			
+		#if UNITY_IPHONE
+			
 			style.setContent ("Text");
 			style.setTitle ("title");
+
+		#elif UNITY_ANDROID
+
 			Hashtable extras = new Hashtable ();
 			extras["key1"] = "value1";
 			extras["key2"] = "value1";
 			style.setExtras (extras);
+
+		#endif
+			
 			mobPush.setMobPushLocalNotification (style);	
 		}
 
@@ -76,9 +97,19 @@ public class Demo : MonoBehaviour {
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "CustomNotify"))
 		{
 			CustomNotifyStyle style = new CustomNotifyStyle ();
+
+		#if UNITY_IPHONE
+
+			style.setType(7);
+
+		#elif UNITY_ANDROID
+
 			style.setContent ("Content");
 			style.setTitle ("Title");
 			style.setTickerText ("TickerText");
+
+		#endif
+			
 			mobPush.setCustomNotification(style);
 		}
 

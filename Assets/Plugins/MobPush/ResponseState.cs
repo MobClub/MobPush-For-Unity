@@ -15,8 +15,8 @@ namespace com.mob.mobpush{
 	public class ResponseState
 	{
 		public static int CoutomMessage = 0;		//CoutomMessage
-		public static int MessageRecvice = 1;			//MessageRecvice
-		public static int MessageOpened = 2;			//MessageOpened
+		public static int MessageRecvice = 1;		//MessageRecvice
+		public static int MessageOpened = 2;		//MessageOpened
 	}
 
 }
