@@ -6,9 +6,8 @@ using System;
 namespace com.mob.mobpush{
 	public class MobPush : MonoBehaviour {
 
-		public string appKey = "moba6b6c6d6";
-		public string appSecret = "b89d2427a3bc7ad1aea1e1e8c1d36bf3";
-
+		//public string appKey = "moba6b6c6d6";
+		//public string appSecret = "b89d2427a3bc7ad1aea1e1e8c1d36bf3";
 		public MobPushImpl mobPushImpl;
 		public OnNotifyCallback onNotifyCallback;
 		public OnTagsCallback onTagsCallback;
@@ -20,11 +19,10 @@ namespace com.mob.mobpush{
 			#if UNITY_IPHONE
 
 				mobPushImpl = new iOSMobPushImpl (gameObject);
-				
 
 			#elif UNITY_ANDROID
 				mobPushImpl = new AndroidImpl (gameObject);
-				mobPushImpl.initPushSDK (appKey, appSecret);
+				//mobPushImpl.initPushSDK (appKey, appSecret);
 			#endif
 
 				mobPushImpl.addPushReceiver ();
@@ -43,14 +41,16 @@ namespace com.mob.mobpush{
 			}
 			int action = Convert.ToInt32(res["action"]);
 			// 0 自定义消息 1 收到 2 点击
-			if (action == 0 || action == 1 || action == 2) {
+			if (action == ResponseState.CoutomMessage || action == ResponseState.MessageRecvice || action == ResponseState.MessageOpened) {
 				if (onNotifyCallback != null) {
 					Hashtable result = (Hashtable) res["result"];
 					onNotifyCallback (action, result);
 				}
 			} else if (action == 3) {
 				if (onTagsCallback != null) {
-					string[] tags = (string[])(res ["tags"]);
+					string stringTags =  Convert.ToString(res ["tags"]);
+					ArrayList array = new ArrayList( stringTags.Split(',') ) ;
+					string[] tags = (string[])array.ToArray (typeof(string));
 					int operation = Convert.ToInt32(res["operation"]);
 					int errorCode =  Convert.ToInt32(res["errorCode"]);
 					onTagsCallback (action, tags, operation, errorCode);
@@ -96,27 +96,45 @@ namespace com.mob.mobpush{
 			}
 		}
 
+		#if UNITY_IPHONE
 		public void setAPNsForProduction (bool isPro)
 		{
-			#if UNITY_IPHONE
 			mobPushImpl.setAPNsForProduction(isPro);
-			#endif
+			
 		}
-
-		public void initPushSDK(string appKey, string appScrect) {
-			mobPushImpl.initPushSDK (appKey, appSecret);
-		}
+		#endif
 
 		public void addPushReceiver() {
 			mobPushImpl.addPushReceiver ();
 		}
-
 	
+		#if UNITY_ANDROID
+		public void initPushSDK(string appKey, string appScrect) {
+			mobPushImpl.initPushSDK (appKey, appScrect);
+		}
+
+		public void stopPush() {
+			mobPushImpl.stopPush ();
+		}
+
+		public void restartPush() {
+			mobPushImpl.restartPush ();
+		}
+
+		public bool isPushStopped() {
+			return mobPushImpl.isPushStopped ();
+		}
+
+		public void setClickNotificationToLaunchPage(bool isOpen) {
+			mobPushImpl.setClickNotificationToLaunchPage (isOpen);
+		}
+		#endif
+			
 		public void getRegistrationId() {
 			mobPushImpl.getRegistrationId ();
 		}
 
-		public void addTags(string tags) {
+		public void addTags(string[] tags) {
 			mobPushImpl.addTags (tags);
 		}
 
@@ -124,7 +142,7 @@ namespace com.mob.mobpush{
 			mobPushImpl.getTags ();
 		}
 
-		public void deleteTags(string tags) {
+		public void deleteTags(string[] tags) {
 			mobPushImpl.deleteTags (tags);
 		}
 

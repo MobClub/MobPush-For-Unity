@@ -18,7 +18,7 @@ public class Demo : MonoBehaviour {
 		mobPush.onDemoReqCallback = OnDemoReqHandler;
 		mobPush.onRegIdCallback = OnRegIdHandler;
 
-		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom，Android 不用
+		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom (only ios)
 		#if UNITY_IPHONE
 
 			// 真机调试 false , 上线 true
@@ -75,19 +75,14 @@ public class Demo : MonoBehaviour {
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "Send Locat Notify"))
 		{
 			LocalNotifyStyle style = new LocalNotifyStyle ();
-			
-		#if UNITY_IPHONE
-			
 			style.setContent ("Text");
 			style.setTitle ("title");
 
-		#elif UNITY_ANDROID
-
+		#if UNITY_ANDROID
 			Hashtable extras = new Hashtable ();
 			extras["key1"] = "value1";
 			extras["key2"] = "value1";
 			style.setExtras (extras);
-
 		#endif
 			
 			mobPush.setMobPushLocalNotification (style);	
@@ -100,7 +95,7 @@ public class Demo : MonoBehaviour {
 
 		#if UNITY_IPHONE
 
-			style.setType(7);
+			style.setType( (int)(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert) );
 
 		#elif UNITY_ANDROID
 
@@ -117,6 +112,76 @@ public class Demo : MonoBehaviour {
 		{
 			mobPush.getRegistrationId ();
 		}
+
+		//Test Code
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "addTags"))
+		{
+			String[] tags = { "tags1", "tags2", "tags3" };
+			mobPush.addTags (tags);
+		}
+
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "getTags"))
+		{
+			mobPush.getTags ();
+		}
+
+
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "deleteTags"))
+		{
+			String[] tags = { "tags1", "tags2", "tags3" };
+			mobPush.deleteTags (tags);
+		}
+
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "cleanAllTags"))
+		{
+			mobPush.cleanAllTags ();
+		}
+
+
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "addAlias"))
+		{
+			mobPush.addAlias ("alias");
+		}
+
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "getAlias"))
+		{
+			mobPush.getAlias ();
+		}
+
+
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "cleanAllAlias"))
+		{
+			mobPush.cleanAllAlias ();
+		}
+
+		#if UNITY_ANDROID
+
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "stopPush"))
+		{
+			mobPush.stopPush ();
+		}
+
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "restartPush"))
+		{
+			mobPush.restartPush ();
+		}
+
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "isPushStop"))
+		{
+			mobPush.isPushStopped();
+		}
+
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "setClickNotificationToLaunchPage"))
+		{
+			mobPush.setClickNotificationToLaunchPage(false);
+		}
+		#endif
 	}
 	
 	void OnNitifyHandler (int action, Hashtable resulte)
@@ -138,12 +203,13 @@ public class Demo : MonoBehaviour {
 	
 	void OnTagsHandler (int action, string[] tags, int operation, int errorCode)
 	{
-		Debug.Log ("OnTagsHandler");
+		
+		Debug.Log ("OnTagsHandler  action:" + action + " tags:" + String.Join (",", tags) + " operation:" + operation + "errorCode:" + errorCode);
 	}
 
 	void OnAliasHandler (int action, string alias, int operation, int errorCode)
 	{
-		Debug.Log ("OnAliasHandler");
+		Debug.Log ("OnAliasHandler action:" + action + " alias:" + alias + " operation:" + operation + "errorCode:" + errorCode);
 	}
 
 	void OnRegIdHandler (string regId)

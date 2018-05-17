@@ -32,6 +32,35 @@ namespace com.mob.mobpush
 			}
 		}
 
+		public override void stopPush (){
+			Debug.Log("AndroidImpl  ===>>>  stopPush === ");
+			if(javaObj != null){
+				javaObj.Call ("stopPush");
+			}
+		}
+
+		public override void restartPush (){
+			Debug.Log("AndroidImpl  ===>>>  restartPush === ");
+			if(javaObj != null){
+				javaObj.Call ("restartPush");
+			}
+		}
+
+		public override bool isPushStopped (){
+			Debug.Log("AndroidImpl  ===>>>  isPushStopped === ");
+			if(javaObj != null){
+				return javaObj.Call <bool>("isPushStopped");
+			}
+			return false;
+		}
+
+		public override void setClickNotificationToLaunchPage (bool isOpen){
+			Debug.Log("AndroidImpl  ===>>>  setClickNotificationToLaunchPage === ");
+			if(javaObj != null){
+				javaObj.Call ("setClickNotificationToLaunchMainActivity", isOpen);
+			}
+		}
+
 		public override void getRegistrationId (){
 			Debug.Log("AndroidImpl  ===>>>  getRegistrationId === ");
 			if(javaObj != null){
@@ -39,10 +68,11 @@ namespace com.mob.mobpush
 			}
 		}
 
-		public override void addTags (string tags){
+		public override void addTags (string[] tags){
 			Debug.Log("AndroidImpl  ===>>>  addTags === ");
 			if(javaObj != null){
-				javaObj.Call ("addTags", tags);
+				string stringTags = String.Join (",", tags);
+				javaObj.Call ("addTags", stringTags);
 			}
 		}
 
@@ -53,10 +83,11 @@ namespace com.mob.mobpush
 			}
 		}
 
-		public override void deleteTags (string tags){
+		public override void deleteTags (string[] tags){
 			Debug.Log("AndroidImpl  ===>>>  deleteTags === ");
 			if(javaObj != null){
-				javaObj.Call ("deleteTags", tags);
+				string stringTags = String.Join (",", tags);
+				javaObj.Call ("deleteTags", stringTags);
 			}
 		}
 
@@ -70,7 +101,7 @@ namespace com.mob.mobpush
 		public override void addAlias (string alias){
 			Debug.Log("AndroidImpl  ===>>>  addAlias === ");
 			if(javaObj != null){
-				javaObj.Call ("addAlias", alias);
+				javaObj.Call ("setAlias", alias);
 			}
 		}
 
@@ -104,7 +135,7 @@ namespace com.mob.mobpush
 			}
 		}
 
-		public override void req (int type, string content, int space, string extras, int iosProduction){
+		public override void req (int type, string content, int space, string extras){
 			Debug.Log("AndroidImpl  ===>>>  req === ");
 			if(javaObj != null){
 				javaObj.Call ("req", type, content, space, extras);

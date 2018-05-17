@@ -21,8 +21,6 @@
 			</intent-filter>
 			<meta-data android:name="unityplayer.UnityActivity" android:value="true" />
 		</activity>
-
-        <activity android:name=".JumpActivity"/>
     </application>
 
 </manifest>

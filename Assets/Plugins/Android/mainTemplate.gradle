@@ -1,15 +1,9 @@
 buildscript {
     repositories {
         jcenter()
-        maven {
-            url 'http://developer.huawei.com/repo/'
-        }
-        maven {
-            url "http://mvn.mob.com/android"
-        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.4'
+        classpath 'com.android.tools.build:gradle:2.3.0'
         // 注册MobSDK
         classpath 'com.mob.sdk:MobSDK:+'
     }
@@ -132,7 +126,4 @@ android {
 
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.huawei.android.hms:push:2.6.0.301'
-    compile 'com.meizu.flyme.internet:push-internal:3.6.5'
-    compile 'com.mob.push.plugins:xiaomi:3.6.1@aar'
 }

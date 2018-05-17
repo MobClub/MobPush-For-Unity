@@ -17,10 +17,33 @@ namespace com.mob.mobpush{
 		public abstract void addPushReceiver ();
 
 		/// <summary>
-		/// set APNs 环境
+		/// set APNs 环境（ios only）
 		/// </summary>
+		#if UNITY_IPHONE
 		public abstract void setAPNsForProduction (bool isPro);
-		
+
+		#elif UNITY_ANDROID
+		/// <summary>
+		/// stop push（Android Onle）
+		/// </summary>
+		public abstract void stopPush ();
+
+		/// <summary>
+		/// restart Push（Android Onle）
+		/// </summary>
+		public abstract void restartPush ();
+
+		/// <summary>
+		/// isPushStop（Android Only）
+		/// </summary>
+		public abstract bool isPushStopped ();
+
+		/// <summary>
+		/// Open the launch activity after click notification（Android Only）
+		/// default true.
+		/// </summary>
+		public abstract void setClickNotificationToLaunchPage (bool isOpen);
+		#endif
 
 		/// <summary>
 		/// getRegistrationId.
@@ -30,7 +53,7 @@ namespace com.mob.mobpush{
 		/// <summary>
 		/// add Tags.
 		/// </summary>
-		public abstract void addTags (string tags);
+		public abstract void addTags (string[] tags);
 		
 		/// <summary>
 		/// get Tags.
@@ -40,7 +63,7 @@ namespace com.mob.mobpush{
 		/// <summary>
 		/// delete tags.
 		/// </summary>
-		public abstract void deleteTags (string tags);
+		public abstract void deleteTags (string[] tags);
 
 		/// <summary>
 		/// Determine weather the APP-Client of platform is valid.
