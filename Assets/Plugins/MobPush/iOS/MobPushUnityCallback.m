@@ -134,10 +134,10 @@
                 }
             }
             
-            NSString *mobpushMessageId = message.apnsDict[@"mobpushMessageId"];
-            if (mobpushMessageId)
+            NSString *messageId = message.apnsDict[@"mobpushMessageId"];
+            if (messageId)
             {
-                [reslut setObject:mobpushMessageId forKey:@"mobpushMessageId"];
+                [reslut setObject:mobpushMessageId forKey:@"messageId"];
             }
             
             NSMutableDictionary *extra = [NSMutableDictionary dictionary];
