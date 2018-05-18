@@ -214,7 +214,6 @@
         default:
             break;
     }
-    NSLog(@"---------------%@", resultDict);
     
     if (reslut.count)
     {

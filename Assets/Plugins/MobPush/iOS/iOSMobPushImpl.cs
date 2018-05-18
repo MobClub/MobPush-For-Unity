@@ -75,9 +75,10 @@ namespace com.mob.mobpush
 			__iosMobPushGetRegistrationID(_gameObjectName);
 		}
 
-		public override void addTags (string tags)
+		public override void addTags (string[] tags)
 		{
-			__iosMobPushAddTags(tags, _gameObjectName);
+			string stringTags = String.Join (",", tags);
+			__iosMobPushAddTags(stringTags, _gameObjectName);
 		}
 
 		public override void getTags ()
@@ -85,9 +86,10 @@ namespace com.mob.mobpush
 			__iosMobPushGetTags(_gameObjectName);
 		}
 
-		public override void deleteTags (string tags)
+		public override void deleteTags (string[] tags)
 		{
-			__iosMobPushDeleteTags(tags, _gameObjectName);
+			string stringTags = String.Join (",", tags);
+			__iosMobPushDeleteTags(stringTags, _gameObjectName);
 		}
 
 		public override void cleanAllTags ()

@@ -97,7 +97,9 @@ extern "C" {
             {
                 if (tags.count)
                 {
-                    [resultDict setObject:tags forKey:@"tags"];
+                    NSString *tagStr = [tags componentsJoinedByString:@","];
+                    
+                    [resultDict setObject:tagStr forKey:@"tags"];
                 }
                 [resultDict setObject:@(0) forKey:@"errorCode"];
             }
@@ -110,7 +112,12 @@ extern "C" {
     extern void __iosMobPushAddTags (void *tags, void *observer)
     {
         NSString *theParamsStr = [NSString stringWithCString:tags encoding:NSUTF8StringEncoding];
-        NSArray *tagParams = [MOBFJson objectFromJSONString:theParamsStr];
+        NSArray *tagParams = nil;
+        
+        if (theParamsStr)
+        {
+            tagParams = [theParamsStr componentsSeparatedByString:@","];
+        }
         
         NSString *observerStr = nil;
         if (observer)
@@ -142,7 +149,12 @@ extern "C" {
     extern void __iosMobPushDeleteTags (void *tags, void *observer)
     {
         NSString *theParamsStr = [NSString stringWithCString:tags encoding:NSUTF8StringEncoding];
-        NSArray *tagParams = [MOBFJson objectFromJSONString:theParamsStr];
+        NSArray *tagParams = nil;
+        
+        if (theParamsStr)
+        {
+            tagParams = [theParamsStr componentsSeparatedByString:@","];
+        }
         
         NSString *observerStr = nil;
         if (observer)
@@ -213,7 +225,7 @@ extern "C" {
             
             NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
             // action = 4 ，操作 alias
-            [resultDict setObject:@3 forKey:@"action"];
+            [resultDict setObject:@4 forKey:@"action"];
             // operation = 0 获取
             [resultDict setObject:@0 forKey:@"operation"];
             if (error)
@@ -248,7 +260,7 @@ extern "C" {
             
             NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
             // action = 4 ，操作 alias
-            [resultDict setObject:@3 forKey:@"action"];
+            [resultDict setObject:@4 forKey:@"action"];
             // operation = 1 设置
             [resultDict setObject:@1 forKey:@"operation"];
             if (error)
@@ -276,9 +288,9 @@ extern "C" {
         [MobPush deleteAlias:^(NSError *error) {
             NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
             // action = 4 ，操作 alias
-            [resultDict setObject:@3 forKey:@"action"];
+            [resultDict setObject:@4 forKey:@"action"];
             // operation = 2 删除
-            [resultDict setObject:@1 forKey:@"operation"];
+            [resultDict setObject:@2 forKey:@"operation"];
             if (error)
             {
                 [resultDict setObject:@(error.code) forKey:@"errorCode"];
@@ -302,7 +314,6 @@ extern "C" {
         }
         
         [MobPush getRegistrationID:^(NSString *registrationID, NSError *error) {
-            NSLog(@"-----------%@", registrationID);
             if (registrationID)
             {
                 UnitySendMessage([observerStr UTF8String], "_MobPushRegIdCallback", [registrationID UTF8String]);

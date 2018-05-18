@@ -24,12 +24,12 @@ namespace com.mob.mobpush{
 
 		#elif UNITY_ANDROID
 		/// <summary>
-		/// stop push（Android Onle）
+		/// stop push（Android Only）
 		/// </summary>
 		public abstract void stopPush ();
 
 		/// <summary>
-		/// restart Push（Android Onle）
+		/// restart Push（Android Only）
 		/// </summary>
 		public abstract void restartPush ();
 

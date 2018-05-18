@@ -79,7 +79,7 @@ namespace com.mob.mobpush{
 
 			public Hashtable styleParams = new Hashtable();
 
-			public void setType(int type){
+			public void setType(AuthorizationType type){
 				styleParams ["type"] = type;
 			}
 
