@@ -218,22 +218,30 @@ public class MobPushUtils {
 		MobPushLocalNotification mobPushLocalNotification = new MobPushLocalNotification();
 		if(map.containsKey("content")){
 			mobPushLocalNotification.setContent((String)map.get("content"));
-		} else if(map.containsKey("title")){
-			mobPushLocalNotification.setContent((String)map.get("title"));
-		} else if(map.containsKey("styleContent")){
+		}
+		if(map.containsKey("title")){
+			mobPushLocalNotification.setTitle((String)map.get("title"));
+		}
+		if(map.containsKey("styleContent")){
 			mobPushLocalNotification.setStyleContent((String)map.get("styleContent"));
-		} else if(map.containsKey("extras")){
+		}
+		if(map.containsKey("extras")){
 			HashMap<String, String> extrasMap = hashon.fromJson((String)map.get("extras"));
 			mobPushLocalNotification.setExtrasMap(extrasMap);
-		} else if(map.containsKey("timestamp")){
+		}
+		if(map.containsKey("timestamp")){
 			mobPushLocalNotification.setTimestamp(Long.valueOf((String)map.get("timestamp")) + System.currentTimeMillis());
-		} else if(map.containsKey("isVoice")){
+		}
+		if(map.containsKey("isVoice")){
 			mobPushLocalNotification.setVoice(Boolean.valueOf((String)map.get("isVoice")));
-		} else if(map.containsKey("isShake")){
+		}
+		if(map.containsKey("isShake")){
 			mobPushLocalNotification.setShake(Boolean.valueOf((String)map.get("isShake")));
-		} else if(map.containsKey("isLight")){
+		}
+		if(map.containsKey("isLight")){
 			mobPushLocalNotification.setLight(Boolean.valueOf((String)map.get("isLight")));
-		} else if(map.containsKey("style")){
+		}
+		if(map.containsKey("style")){
 			mobPushLocalNotification.setStyle(Integer.valueOf((String)map.get("style")));
 		}
 		mobPushLocalNotification.setNotificationId(new Random().nextInt());
