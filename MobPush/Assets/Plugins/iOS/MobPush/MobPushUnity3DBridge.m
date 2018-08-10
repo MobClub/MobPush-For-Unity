@@ -343,6 +343,8 @@ extern "C" {
                                       space:@(space)
                     isProductionEnvironment:[MobPushUnityCallback defaultCallBack].isPro
                                      extras:extrasDict
+                                 linkScheme:@""
+                                   linkData:@""
                                      result:^(NSError *error) {
                                          
                                          NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];

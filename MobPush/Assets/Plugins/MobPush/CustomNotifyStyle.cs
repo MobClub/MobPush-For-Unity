@@ -80,7 +80,7 @@ namespace com.mob.mobpush{
 			public Hashtable styleParams = new Hashtable();
 
 			public void setType(AuthorizationType type){
-				styleParams ["type"] = type;
+                styleParams ["type"] = (int)type;
 			}
 
 			public void setCategorys(string categorys){

@@ -92,9 +92,9 @@
                 mobpushMessageId = 159346875878223872;
             }
              */
-            if (message.apnsDict.count)
+            if (message.msgInfo)
             {
-                NSDictionary *aps = message.apnsDict[@"aps"];
+                NSDictionary *aps = message.msgInfo[@"aps"];
                 if ([aps isKindOfClass:[NSDictionary class]])
                 {
                     NSDictionary *alert = aps[@"alert"];
@@ -134,14 +134,14 @@
                 }
             }
             
-            NSString *messageId = message.apnsDict[@"mobpushMessageId"];
+            NSString *messageId = message.msgInfo[@"mobpushMessageId"];
             if (messageId)
             {
                 [reslut setObject:messageId forKey:@"messageId"];
             }
             
             NSMutableDictionary *extra = [NSMutableDictionary dictionary];
-            [message.apnsDict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            [message.msgInfo enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
                
                 if (![key isEqualToString:@"aps"] && ![key isEqualToString:@"mobpushMessageId"])
                 {
