@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 492c2f095fc3c4d1e83c5ceb7b73274e
+guid: 131531e0e1c2a4d659cc8a51d6154726
 folderAsset: yes
 PluginImporter:
   externalObjects: {}
@@ -12,12 +12,12 @@ PluginImporter:
   - first:
       Any: 
     second:
-      enabled: 1
+      enabled: 0
       settings: {}
   - first:
       Editor: Editor
     second:
-      enabled: 0
+      enabled: 1
       settings:
         DefaultValueInitialized: true
   userData: 

@@ -155,16 +155,18 @@
                 [reslut setObject:extra forKey:@"extra"];
             }
             
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
-            {
-                // 前台收到
-                [resultDict setObject:@1 forKey:@"action"];
-            }
-            else
-            {
-                // 点击通知
-                [resultDict setObject:@2 forKey:@"action"];
-            }
+            [resultDict setObject:@1 forKey:@"action"];
+            
+            //            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+            //            {
+            //                // 前台收到
+            //                [resultDict setObject:@1 forKey:@"action"];
+            //            }
+            //            else
+            //            {
+            //                // 点击通知
+            //                [resultDict setObject:@2 forKey:@"action"];
+            //            }
         }
             break;
         case MPushMessageTypeLocal:
@@ -199,16 +201,19 @@
                 [reslut setObject:sound forKey:@"sound"];
             }
             
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
-            {
-                // 前台收到
-                [resultDict setObject:@1 forKey:@"action"];
-            }
-            else
-            {
-                // 点击通知
-                [resultDict setObject:@2 forKey:@"action"];
-            }
+            
+            [resultDict setObject:@1 forKey:@"action"];
+            
+//            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+//            {
+//                // 前台收到
+//                [resultDict setObject:@1 forKey:@"action"];
+//            }
+//            else
+//            {
+//                // 点击通知
+//                [resultDict setObject:@2 forKey:@"action"];
+//            }
         }
             break;
         default:
