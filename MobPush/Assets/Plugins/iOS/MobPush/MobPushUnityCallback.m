@@ -216,6 +216,113 @@
 //            }
         }
             break;
+            
+        case MPushMessageTypeClicked:
+        {
+//            action = 2;
+            
+            if (message.msgInfo)
+            {
+                NSDictionary *aps = message.msgInfo[@"aps"];
+                if ([aps isKindOfClass:[NSDictionary class]])
+                {
+                    NSDictionary *alert = aps[@"alert"];
+                    if ([alert isKindOfClass:[NSDictionary class]])
+                    {
+                        NSString *body = alert[@"body"];
+                        if (body)
+                        {
+                            [reslut setObject:body forKey:@"content"];
+                        }
+                        
+                        NSString *subtitle = alert[@"subtitle"];
+                        if (subtitle)
+                        {
+                            [reslut setObject:subtitle forKey:@"subtitle"];
+                        }
+                        
+                        NSString *title = alert[@"title"];
+                        if (title)
+                        {
+                            [reslut setObject:title forKey:@"title"];
+                        }
+                    }
+                    
+                    NSString *sound = aps[@"sound"];
+                    if (sound)
+                    {
+                        [reslut setObject:sound forKey:@"sound"];
+                    }
+                    
+                    NSInteger badge = [aps[@"badge"] integerValue];
+                    if (badge)
+                    {
+                        [reslut setObject:@(badge) forKey:@"badge"];
+                    }
+                    
+                }
+                
+                NSString *messageId = message.msgInfo[@"mobpushMessageId"];
+                if (messageId)
+                {
+                    [reslut setObject:messageId forKey:@"messageId"];
+                }
+                
+                NSMutableDictionary *extra = [NSMutableDictionary dictionary];
+                [message.msgInfo enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    
+                    if (![key isEqualToString:@"aps"] && ![key isEqualToString:@"mobpushMessageId"])
+                    {
+                        [extra setObject:obj forKey:key];
+                    }
+                    
+                }];
+                
+                if (extra.count)
+                {
+                    [reslut setObject:extra forKey:@"extra"];
+                }
+                
+                [resultDict setObject:@2 forKey:@"action"];
+            }
+            else
+            {
+                NSString *body = message.notification.body;
+                NSString *title = message.notification.title;
+                NSString *subtitle = message.notification.subTitle;
+                NSInteger badge = message.notification.badge;
+                NSString *sound = message.notification.sound;
+                if (body)
+                {
+                    [reslut setObject:body forKey:@"content"];
+                }
+                
+                if (title)
+                {
+                    [reslut setObject:title forKey:@"title"];
+                }
+                
+                if (subtitle)
+                {
+                    [reslut setObject:subtitle forKey:@"subtitle"];
+                }
+                
+                if (badge)
+                {
+                    [reslut setObject:@(badge) forKey:@"badge"];
+                }
+                
+                if (sound)
+                {
+                    [reslut setObject:sound forKey:@"sound"];
+                }
+                
+                [resultDict setObject:@2 forKey:@"action"];
+            }
+            
+        }
+            break;
+            
         default:
             break;
     }
