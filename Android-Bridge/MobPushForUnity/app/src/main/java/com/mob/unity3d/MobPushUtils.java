@@ -7,6 +7,7 @@ import com.mob.MobSDK;
 import com.mob.pushsdk.MobPush;
 import com.mob.pushsdk.MobPushLocalNotification;
 import com.mob.tools.utils.Hashon;
+import com.mob.tools.utils.ResHelper;
 import com.mob.unity3d.listener.MobPushDemoListener;
 import com.mob.unity3d.listener.MobPushListener;
 import com.mob.unity3d.listener.MobPushRegIdCallback;
@@ -16,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -258,6 +258,32 @@ public class MobPushUtils {
 			System.out.println("setCustomNotification:" + reqJson);
 		}
 		MobPush.setCustomNotification(new CustomNotification(reqJson));
+	}
+
+	/**
+	 * 设置通知图标
+	 * @param resIcon 图标资源名称
+	 */
+	public void setNotifyIcon(String resIcon){
+		if(DEBUG) {
+			System.out.println("setNotifyIcon:" + resIcon);
+		}
+
+		if (!TextUtils.isEmpty(resIcon)) {
+			MobPush.setNotifyIcon(ResHelper.getBitmapRes(MobSDK.getContext(), resIcon));
+		}
+	}
+
+	/**
+	 * 设置应用前台时通知是否显示
+	 * @param hidden 是否隐藏，true为隐藏不显示通知，false为显示不隐藏通知
+	 */
+	public void setAppForegroundHiddenNotification(boolean hidden){
+		if(DEBUG) {
+			System.out.println("setAppForegroundHiddenNotification:" + hidden);
+		}
+
+		MobPush.setAppForegroundHiddenNotification(hidden);
 	}
 
 	/**
