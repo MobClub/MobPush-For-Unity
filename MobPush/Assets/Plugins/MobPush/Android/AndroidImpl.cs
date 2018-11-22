@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace com.mob.mobpush
 {
-	#if UNITY_ANDROID
+#if UNITY_ANDROID
 	public class AndroidImpl : MobPushImpl {
 		private AndroidJavaObject javaObj;
 
@@ -135,6 +135,20 @@ namespace com.mob.mobpush
 			}
 		}
 
+        public override void setNotifyIcon (string resIcon){
+			Debug.Log("AndroidImpl  ===>>>  setNotifyIcon === ");
+			if(javaObj != null){
+				javaObj.Call ("setNotifyIcon", resIcon);
+			}
+		}
+
+        public override void setAppForegroundHiddenNotification (bool hidden){
+			Debug.Log("AndroidImpl  ===>>>  setAppForegroundHiddenNotification === ");
+			if(javaObj != null){
+				javaObj.Call ("setAppForegroundHiddenNotification", hidden);
+			}
+		}
+
 		public override void req (int type, string content, int space, string extras){
 			Debug.Log("AndroidImpl  ===>>>  req === ");
 			if(javaObj != null){
@@ -142,5 +156,5 @@ namespace com.mob.mobpush
 			}
 		}
 	}
-	#endif
+#endif
 }
