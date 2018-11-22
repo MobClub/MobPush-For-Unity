@@ -21,7 +21,7 @@ allprojects {
 
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.mob.sdk'
+apply from: 'MobPush/MobSDK.gradle'
 
 // 在MobSDK的扩展中注册MobPush的相关信息
 MobSDK {
@@ -95,4 +95,5 @@ android {
 
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
+	compile project(':MobPush')
 }
