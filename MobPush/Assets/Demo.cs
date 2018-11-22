@@ -162,7 +162,7 @@ public class Demo : MonoBehaviour {
 			mobPush.cleanAllAlias ();
 		}
 
-		#if UNITY_ANDROID
+#if UNITY_ANDROID
 
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "stopPush"))
 		{
@@ -185,10 +185,11 @@ public class Demo : MonoBehaviour {
 		{
 			mobPush.setClickNotificationToLaunchPage(false);
 		}
-		#endif
-	}
-	
-	void OnNitifyHandler (int action, Hashtable resulte)
+
+#endif
+    }
+
+    void OnNitifyHandler (int action, Hashtable resulte)
 	{
 		Debug.Log ("OnNitifyHandler");
 		if (action == ResponseState.CoutomMessage)
