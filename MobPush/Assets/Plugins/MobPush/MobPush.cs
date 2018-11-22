@@ -107,8 +107,8 @@ namespace com.mob.mobpush{
 		public void addPushReceiver() {
 			mobPushImpl.addPushReceiver ();
 		}
-	
-		#if UNITY_ANDROID
+
+#if UNITY_ANDROID
 		public void initPushSDK(string appKey, string appScrect) {
 			mobPushImpl.initPushSDK (appKey, appScrect);
 		}
@@ -128,9 +128,17 @@ namespace com.mob.mobpush{
 		public void setClickNotificationToLaunchPage(bool isOpen) {
 			mobPushImpl.setClickNotificationToLaunchPage (isOpen);
 		}
-		#endif
-			
-		public void getRegistrationId() {
+        
+        public void setNotifyIcon(string resIcon) {
+			mobPushImpl.setNotifyIcon (resIcon);
+		}
+        
+        public void setAppForegroundHiddenNotification(bool hidden) {
+			mobPushImpl.setAppForegroundHiddenNotification (hidden);
+		}
+#endif
+
+        public void getRegistrationId() {
 			mobPushImpl.getRegistrationId ();
 		}
 

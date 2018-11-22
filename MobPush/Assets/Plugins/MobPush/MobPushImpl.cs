@@ -16,13 +16,13 @@ namespace com.mob.mobpush{
 		/// </summary>
 		public abstract void addPushReceiver ();
 
-		/// <summary>
-		/// set APNs 环境（ios only）
-		/// </summary>
-		#if UNITY_IPHONE
+        /// <summary>
+        /// set APNs 环境（ios only）
+        /// </summary>
+#if UNITY_IPHONE
 		public abstract void setAPNsForProduction (bool isPro);
 
-		#elif UNITY_ANDROID
+#elif UNITY_ANDROID
 		/// <summary>
 		/// stop push（Android Only）
 		/// </summary>
@@ -43,12 +43,21 @@ namespace com.mob.mobpush{
 		/// default true.
 		/// </summary>
 		public abstract void setClickNotificationToLaunchPage (bool isOpen);
-		#endif
-
-		/// <summary>
-		/// getRegistrationId.
+        /// <summary>
+		/// set notification icon（Android Only）
 		/// </summary>
-		public abstract void getRegistrationId ();
+        public abstract void setNotifyIcon (string resIcon);
+
+        /// <summary>
+		/// Set whether the app hides notifications when it runs in the foreground（Android Only）
+		/// </summary>
+        public abstract void setAppForegroundHiddenNotification (bool hidden);
+#endif
+
+        /// <summary>
+        /// getRegistrationId.
+        /// </summary>
+        public abstract void getRegistrationId ();
 
 		/// <summary>
 		/// add Tags.
