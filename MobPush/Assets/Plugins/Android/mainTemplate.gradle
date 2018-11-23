@@ -2,14 +2,16 @@
 
 buildscript {
     repositories {
+	    google()
         jcenter()
-        google()
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
 		// 注册MobSDK
         classpath 'com.mob.sdk:MobSDK:+'
+		// 注册Google services，用于FCM推送，不配置FCM通道则无需配置
+		classpath 'com.google.gms:google-services:4.0.1'
     }
 }
 
@@ -67,3 +69,7 @@ android {
     }**PACKAGING_OPTIONS****SPLITS**
 **BUILT_APK_LOCATION**
 }**SPLITS_VERSION_CODE****SOURCE_BUILD_SETUP**
+
+
+
+
