@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-
+using UnityEngine;
 
 namespace com.mob.mobpush{
 	public abstract class MobPushImpl {
@@ -16,11 +16,23 @@ namespace com.mob.mobpush{
 		/// </summary>
 		public abstract void addPushReceiver ();
 
-        /// <summary>
+        
+#if UNITY_IPHONE
+		/// <summary>
         /// set APNs 环境（ios only）
         /// </summary>
-#if UNITY_IPHONE
 		public abstract void setAPNsForProduction (bool isPro);
+
+		/// <summary>
+        /// 设置角标（ios only）
+        /// </summary>
+		public abstract void setBadge (int badge);
+
+		/// <summary>
+        /// 清空角标
+        /// </summary>
+		public abstract void clearBadge ();
+
 
 #elif UNITY_ANDROID
 		/// <summary>

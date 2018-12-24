@@ -48,18 +48,25 @@ namespace com.mob.mobpush
 		private static extern void __iosMobPushGetRegistrationID (string observer);
 
 		[DllImport("__Internal")]
+		private static extern void __iosMobPushSetBadge(int badge);
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushClearBadge();
+
+		[DllImport("__Internal")]
 		private static extern void __iosMobPushSendMessage (int type, string content, int space, string extras, string observer);
 
-		public iOSMobPushImpl (GameObject go) {
+		public iOSMobPushImpl (GameObject go) 
+		{
 			Debug.Log("iOSMobPushImpl  ===>>>  iOSMobPushImpl" + go.name);
 			_gameObjectName = go.name;
 		}
 
 		public override void initPushSDK (string appKey, string appScrect)
 		{
-			
+			 
 		}
-
+		
 		public override void setAPNsForProduction (bool isPro)
 		{
 			__iosMobPushSetAPNsForProduction(isPro);
@@ -130,6 +137,17 @@ namespace com.mob.mobpush
 		{
 			__iosMobPushSendMessage(type, content, space, extras, _gameObjectName);
 		}
+
+		public override void setBadge(int badge) 
+		{
+			__iosMobPushSetBadge(badge);
+		}
+
+		public override void clearBadge() 
+		{
+			__iosMobPushClearBadge();
+		} 
+
 	}
 	#endif
 }

@@ -42,13 +42,28 @@ extern "C" {
 
     extern void __iosMobPushGetRegistrationID (void *observer);
     
+    extern void __iosMobPushSetBadge (int badge);
+    
+    extern void __iosMobPushClearBadge ();
+    
     extern void __iosMobPushSendMessage (int type, void *content, int space, void *extras, void *observer);
     
     MPushNotificationConfiguration *__parseNotiConfigHashtable (void *notificationInfo);
     MPushMessage *__parseMessageHashtable (void *messageInfo);
     
+    void __iosMobPushSetBadge (int badge)
+    {
+        [MobPush setBadge:(NSInteger)badge];
+    }
+    
+    void __iosMobPushClearBadge ()
+    {
+        [MobPush clearBadge];
+    }
+    
     void __iosMobPushSetAPNsForProduction (bool iosPro)
     {
+        NSLog(@"__iosMobPushSetAPNsForProduction%d", iosPro);
         [MobPushUnityCallback defaultCallBack].isPro = iosPro == true ? YES : NO;
     }
     

@@ -6,8 +6,6 @@ using System;
 namespace com.mob.mobpush{
 	public class MobPush : MonoBehaviour {
 
-		//public string appKey = "moba6b6c6d6";
-		//public string appSecret = "b89d2427a3bc7ad1aea1e1e8c1d36bf3";
 		public MobPushImpl mobPushImpl;
 		public OnNotifyCallback onNotifyCallback;
 		public OnTagsCallback onTagsCallback;
@@ -16,13 +14,15 @@ namespace com.mob.mobpush{
 		public OnDemoReqCallback onDemoReqCallback;
 
 		void Awake() {
+
 			#if UNITY_IPHONE
 
 				mobPushImpl = new iOSMobPushImpl (gameObject);
+				
+			#endif
 
-			#elif UNITY_ANDROID
+			#if UNITY_ANDROID
 				mobPushImpl = new AndroidImpl (gameObject);
-				//mobPushImpl.initPushSDK (appKey, appSecret);
 			#endif
 
 				mobPushImpl.addPushReceiver ();
@@ -177,6 +177,18 @@ namespace com.mob.mobpush{
 		public void setCustomNotification(CustomNotifyStyle style){
 			mobPushImpl.setCustomNotification (style);
 		}
+
+#if UNITY_IPHONE
+
+		public void setBadge(int badge) {
+			mobPushImpl.setBadge(badge);
+		}
+
+		public void clearBadge() {
+			mobPushImpl.clearBadge();
+		} 
+
+#endif
 
 		public void req(int type, string content, int space, Hashtable extras) {
 			String jsonStr = MiniJSON.jsonEncode (extras);

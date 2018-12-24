@@ -11,21 +11,19 @@ public class Demo : MonoBehaviour {
 
 	void Start ()
 	{	
-		mobPush = gameObject.GetComponent<MobPush>();
 		mobPush.onNotifyCallback = OnNitifyHandler;
 		mobPush.onTagsCallback = OnTagsHandler;
 		mobPush.onAliasCallback = OnAliasHandler;
 		mobPush.onDemoReqCallback = OnDemoReqHandler;
 		mobPush.onRegIdCallback = OnRegIdHandler;
-
+		
 		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom (only ios)
 		#if UNITY_IPHONE
 
-			// 真机调试 false , 上线 true
-			mobPush.setAPNsForProduction(false);
+			mobpush.setAPNsForProduction(true);
 
 			CustomNotifyStyle style = new CustomNotifyStyle ();
-		style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
+			style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
 			mobPush.setCustomNotification(style);
 
 		#endif
