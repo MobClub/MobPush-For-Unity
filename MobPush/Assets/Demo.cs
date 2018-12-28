@@ -18,17 +18,22 @@ public class Demo : MonoBehaviour {
 		mobPush.onDemoReqCallback = OnDemoReqHandler;
 		mobPush.onRegIdCallback = OnRegIdHandler;
 		
+
 		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom (only ios)
 		#if UNITY_IPHONE
 
 			// 真机调试 false , 上线 true
-			mobPush.setAPNsForProduction(true);
+			mobPush.setAPNsForProduction(false);
 
 			CustomNotifyStyle style = new CustomNotifyStyle ();
 			style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
 			mobPush.setCustomNotification(style);
 
+			mobPush.clearBadge();
+			mobPush.setBadge(3);
+
 		#endif
+
 	}
 
 	// Update is called once per frame

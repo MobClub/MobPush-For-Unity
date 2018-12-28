@@ -30,7 +30,6 @@
 
 - (void)didFinishLaunching
 {
-    NSLog(@"didFinishLaunching%d", _isPro);
     [MobPush setAPNsForProduction:_isPro];
 }
 

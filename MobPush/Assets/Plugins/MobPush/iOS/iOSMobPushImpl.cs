@@ -56,7 +56,7 @@ namespace com.mob.mobpush
 		[DllImport("__Internal")]
 		private static extern void __iosMobPushSendMessage (int type, string content, int space, string extras, string observer);
 
-		public iOSMobPushImpl (GameObject go) 
+		public iOSMobPushImpl (GameObject go)
 		{
 			Debug.Log("iOSMobPushImpl  ===>>>  iOSMobPushImpl" + go.name);
 			_gameObjectName = go.name;

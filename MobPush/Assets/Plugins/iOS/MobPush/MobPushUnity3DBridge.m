@@ -63,7 +63,6 @@ extern "C" {
     
     void __iosMobPushSetAPNsForProduction (bool iosPro)
     {
-        NSLog(@"__iosMobPushSetAPNsForProduction%d", iosPro);
         [MobPushUnityCallback defaultCallBack].isPro = iosPro == true ? YES : NO;
     }
     
@@ -72,7 +71,7 @@ extern "C" {
         NSString *observerStr = nil;
         if (observer)
         {
-            observerStr = [NSString stringWithCString:observer encoding:NSUTF8StringEncoding];
+            observerStr = [NSString stringWithCString:observer encoding:NSUTF8StringEncoding]; 
         }
         [[MobPushUnityCallback defaultCallBack] addPushObserver:observerStr];
     }
