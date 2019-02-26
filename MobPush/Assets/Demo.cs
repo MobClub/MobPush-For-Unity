@@ -17,7 +17,7 @@ public class Demo : MonoBehaviour {
 		mobPush.onAliasCallback = OnAliasHandler;
 		mobPush.onDemoReqCallback = OnDemoReqHandler;
 		mobPush.onRegIdCallback = OnRegIdHandler;
-		
+		mobPush.onBindPhoneNumCallback = OnBindPhoneNumHandler;
 
 		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom (only ios)
 		#if UNITY_IPHONE
@@ -26,14 +26,10 @@ public class Demo : MonoBehaviour {
 			mobPush.setAPNsForProduction(false);
 
 			CustomNotifyStyle style = new CustomNotifyStyle ();
-			style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
+		style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
 			mobPush.setCustomNotification(style);
 
-			mobPush.clearBadge();
-			mobPush.setBadge(3);
-
 		#endif
-
 	}
 
 	// Update is called once per frame
@@ -167,26 +163,31 @@ public class Demo : MonoBehaviour {
 			mobPush.cleanAllAlias ();
 		}
 
+        if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "bindPhoneNum"))
+		{
+			mobPush.bindPhoneNum ("18516240756");
+		}
+
 #if UNITY_ANDROID
 
-		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "stopPush"))
+        btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "stopPush"))
 		{
 			mobPush.stopPush ();
 		}
 
-		btnTop += btnHeight + 20 * scale;
-		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "restartPush"))
+		
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "restartPush"))
 		{
 			mobPush.restartPush ();
 		}
-
-		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "isPushStop"))
+        btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "isPushStop"))
 		{
 			mobPush.isPushStopped();
 		}
 
-		btnTop += btnHeight + 20 * scale;
-		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "setClickNotificationToLaunchPage"))
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "setClickNotificationToLaunchPage"))
 		{
 			mobPush.setClickNotificationToLaunchPage(false);
 		}
@@ -226,6 +227,11 @@ public class Demo : MonoBehaviour {
 	{
 		Debug.Log ("OnRegIdHandler-regId:" + regId);
 	}
+
+    void OnBindPhoneNumHandler(bool isSuccess)
+	{
+		Debug.Log ("OnBindPhoneNumHandler-result:" + isSuccess);
+    }
 
 	void OnDemoReqHandler (bool isSuccess)
 	{

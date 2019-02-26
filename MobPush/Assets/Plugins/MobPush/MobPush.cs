@@ -6,23 +6,24 @@ using System;
 namespace com.mob.mobpush{
 	public class MobPush : MonoBehaviour {
 
+		//public string appKey = "moba6b6c6d6";
+		//public string appSecret = "b89d2427a3bc7ad1aea1e1e8c1d36bf3";
 		public MobPushImpl mobPushImpl;
 		public OnNotifyCallback onNotifyCallback;
 		public OnTagsCallback onTagsCallback;
 		public OnAliasCallback onAliasCallback;
 		public OnRegIdCallback onRegIdCallback;
 		public OnDemoReqCallback onDemoReqCallback;
+		public OnBindPhoneNumCallback onBindPhoneNumCallback;
 
 		void Awake() {
-
 			#if UNITY_IPHONE
 
 				mobPushImpl = new iOSMobPushImpl (gameObject);
-				
-			#endif
 
-			#if UNITY_ANDROID
+			#elif UNITY_ANDROID
 				mobPushImpl = new AndroidImpl (gameObject);
+				//mobPushImpl.initPushSDK (appKey, appSecret);
 			#endif
 
 				mobPushImpl.addPushReceiver ();
@@ -93,6 +94,23 @@ namespace com.mob.mobpush{
 			Debug.Log ("_MobPushRegIdCallback-regId:" + regId);
 			if (onRegIdCallback != null) {
 				onRegIdCallback (regId);
+			}
+		}
+
+        private void _MobPushBindPhoneNumCallback (string result) {
+            if (result == null)
+            {
+                return;
+            }
+            Debug.Log ("_MobPushBindPhoneNumCallback-result:" + result);
+
+            Hashtable res = (Hashtable)MiniJSON.jsonDecode(result);
+            if (res == null || res.Count <= 0) {
+                return;
+            }
+            int isSuccess = Convert.ToInt32(res["result"]);
+            if (onBindPhoneNumCallback != null) {
+                onBindPhoneNumCallback(isSuccess==1?true:false);
 			}
 		}
 
@@ -174,25 +192,16 @@ namespace com.mob.mobpush{
 			mobPushImpl.setMobPushLocalNotification (style);
 		}
 
-		public void setCustomNotification(CustomNotifyStyle style){
+		public void setCustomNotification(CustomNotifyStyle style) {
 			mobPushImpl.setCustomNotification (style);
 		}
 
-#if UNITY_IPHONE
+        public void bindPhoneNum(string phoneNum) {
+            mobPushImpl.bindPhoneNum(phoneNum);
+        }
 
-		public void setBadge(int badge) {
-			mobPushImpl.setBadge(badge);
-		}
-
-		public void clearBadge() {
-			mobPushImpl.clearBadge();
-		} 
-
-#endif
-
-		public void req(int type, string content, int space, Hashtable extras) {
+        public void req(int type, string content, int space, Hashtable extras) {
 			String jsonStr = MiniJSON.jsonEncode (extras);
-			Debug.Log("extras  ===>>> " + jsonStr );
 			mobPushImpl.req (type, content, space, jsonStr);
 		}
 
@@ -205,6 +214,8 @@ namespace com.mob.mobpush{
 		public delegate void OnRegIdCallback(string regId);
 
 		public delegate void OnDemoReqCallback(bool isSuccess);
+
+		public delegate void OnBindPhoneNumCallback(bool isSuccess);
 	
 	}
 }
