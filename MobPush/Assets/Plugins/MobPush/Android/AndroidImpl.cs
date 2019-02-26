@@ -12,7 +12,7 @@ namespace com.mob.mobpush
 		public AndroidImpl (GameObject go) {
 			Debug.Log("AndroidImpl  ===>>>  AndroidImpl" );
 			try{
-				javaObj = new AndroidJavaObject("com.mob.unity3d.MobPushUtils", go.name, "_MobPushCallback", "_MobPushDemoCallback", "_MobPushRegIdCallback");
+				javaObj = new AndroidJavaObject("com.mob.unity3d.MobPushUtils", go.name, "_MobPushCallback", "_MobPushDemoCallback", "_MobPushRegIdCallback", "_MobPushBindPhoneNumCallback");
 			} catch(Exception e) {
 				Console.WriteLine("{0} Exception caught.", e);
 			}
@@ -146,6 +146,13 @@ namespace com.mob.mobpush
 			Debug.Log("AndroidImpl  ===>>>  setAppForegroundHiddenNotification === ");
 			if(javaObj != null){
 				javaObj.Call ("setAppForegroundHiddenNotification", hidden);
+			}
+		}
+
+        public override void bindPhoneNum (string phoneNum){
+			Debug.Log("AndroidImpl  ===>>>  bindPhoneNum === "+phoneNum);
+			if(javaObj != null){
+				javaObj.Call ("bindPhoneNum", phoneNum);
 			}
 		}
 
