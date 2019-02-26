@@ -165,7 +165,7 @@ public class Demo : MonoBehaviour {
 
         if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "bindPhoneNum"))
 		{
-			mobPush.bindPhoneNum ("18516240756");
+			mobPush.bindPhoneNum ("12345678988");
 		}
 
 #if UNITY_ANDROID
