@@ -8,6 +8,7 @@ import com.mob.pushsdk.MobPush;
 import com.mob.pushsdk.MobPushLocalNotification;
 import com.mob.tools.utils.Hashon;
 import com.mob.tools.utils.ResHelper;
+import com.mob.unity3d.listener.MobPushBindPhoneNumCallback;
 import com.mob.unity3d.listener.MobPushDemoListener;
 import com.mob.unity3d.listener.MobPushListener;
 import com.mob.unity3d.listener.MobPushRegIdCallback;
@@ -25,18 +26,18 @@ import java.util.Set;
  */
 
 public class MobPushUtils {
-
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 	private static String u3dGameObject;
 	private static String u3dCallback;
 	private static String u3dDemoCallback;
 	private static String u3dRegIdCallback;
+	private static String u3dBindPhoneNumCallback;
 	private static Context context;
 	private Hashon hashon = new Hashon();
 
-	public MobPushUtils(final String gameObject,final String u3dCallback, String u3dDemoCallback, String u3dRegIdCallback) {
+	public MobPushUtils(final String gameObject,final String u3dCallback, String u3dDemoCallback, String u3dRegIdCallback, String u3dBindPhoneNumCallback) {
 		if (DEBUG) {
-			System.out.println("ShareSDKUtils.prepare: gameObject:" + gameObject + " u3dCallback:" + u3dCallback + " u3sDemoCallback:" + u3dDemoCallback);
+			System.out.println("MobPushUtils.prepare: gameObject:" + gameObject + " u3dCallback:" + u3dCallback + " u3sDemoCallback:" + u3dDemoCallback + " u3dBindPhoneNumCallback:" + u3dBindPhoneNumCallback);
 		}
 		if (context == null) {
 			context = UnityPlayer.currentActivity.getApplicationContext();
@@ -53,6 +54,9 @@ public class MobPushUtils {
 		}
 		if(!TextUtils.isEmpty(u3dRegIdCallback)) {
 			this.u3dRegIdCallback = u3dRegIdCallback;
+		}
+		if(!TextUtils.isEmpty(u3dBindPhoneNumCallback)) {
+			this.u3dBindPhoneNumCallback = u3dBindPhoneNumCallback;
 		}
 		hashon = new Hashon();
 	}
@@ -284,6 +288,18 @@ public class MobPushUtils {
 		}
 
 		MobPush.setAppForegroundHiddenNotification(hidden);
+	}
+
+	/**
+	 * 绑定手机号
+	 * @param phoneNum 手机号
+	 */
+	public void bindPhoneNum(String phoneNum){
+		if(DEBUG) {
+			System.out.println("bindPhoneNum:" + phoneNum);
+		}
+		MobPushBindPhoneNumCallback callback = new MobPushBindPhoneNumCallback(u3dGameObject, u3dBindPhoneNumCallback);
+		MobPush.bindPhoneNum(phoneNum, callback);
 	}
 
 	/**
