@@ -165,12 +165,14 @@ public class Demo : MonoBehaviour {
 
         if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "bindPhoneNum"))
 		{
-			mobPush.bindPhoneNum ("12345678988");
+			mobPush.bindPhoneNum ("18326672676");
 		}
+
 
 #if UNITY_ANDROID
 
-        btnTop += btnHeight + 20 * scale;
+        
+		btnTop += btnHeight + 20 * scale;
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "stopPush"))
 		{
 			mobPush.stopPush ();
@@ -186,7 +188,7 @@ public class Demo : MonoBehaviour {
 		{
 			mobPush.isPushStopped();
 		}
-
+        
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "setClickNotificationToLaunchPage"))
 		{
 			mobPush.setClickNotificationToLaunchPage(false);

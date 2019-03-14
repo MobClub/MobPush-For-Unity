@@ -16,27 +16,26 @@ namespace com.mob.mobpush{
 		/// </summary>
 		public abstract void addPushReceiver ();
 
-        /// <summary>
+       
+#if UNITY_IPHONE
+		/// <summary>
         /// set APNs 环境（ios only）
         /// </summary>
-#if UNITY_IPHONE
 		public abstract void setAPNsForProduction (bool isPro);
 
+		/// <summary>
+        /// 设置角标（ios only）
+        /// </summary>
+		public abstract void setBadge(int badge);
+
+		/// <summary>
+        /// 清除角标 （ios only）
+        /// </summary>
+		public abstract void clearBadge();
+
+
 #elif UNITY_ANDROID
-		/// <summary>
-		/// stop push（Android Only）
-		/// </summary>
-		public abstract void stopPush ();
-
-		/// <summary>
-		/// restart Push（Android Only）
-		/// </summary>
-		public abstract void restartPush ();
-
-		/// <summary>
-		/// isPushStop（Android Only）
-		/// </summary>
-		public abstract bool isPushStopped ();
+		
 
 		/// <summary>
 		/// Open the launch activity after click notification（Android Only）
@@ -53,6 +52,21 @@ namespace com.mob.mobpush{
 		/// </summary>
         public abstract void setAppForegroundHiddenNotification (bool hidden);
 #endif
+
+        /// <summary>
+		/// stop push（Android Only）
+		/// </summary>
+		public abstract void stopPush ();
+
+		/// <summary>
+		/// restart Push（Android Only）
+		/// </summary>
+		public abstract void restartPush ();
+
+		/// <summary>
+		/// isPushStop（Android Only）
+		/// </summary>
+		public abstract bool isPushStopped ();
 
         /// <summary>
         /// getRegistrationId.

@@ -13,6 +13,7 @@
 #import <MobPush/MobPush+Test.h>
 #import <MobPush/MPushMessage.h>
 #import "MobPushUnityCallback.h"
+#import <MOBFoundation/MobSDK.h>
 
 #if defined (__cplusplus)
 extern "C" {
@@ -46,10 +47,65 @@ extern "C" {
     
     extern void __iosMobPushClearBadge ();
     
+    extern void __iosMobPushBindPhoneNum(void *phoneNum);
+    
+    extern void __iosMobPushStopPush();
+    
+    extern void __iosMobPushRestartPush();
+    
+    extern bool __iosMobPushIsPushStopped();
+    
     extern void __iosMobPushSendMessage (int type, void *content, int space, void *extras, void *observer);
+    
+    extern void __iosMobPushInitPushSDK (void *appKey, void *appScrect);
+    
+    static BOOL _iosPro;
     
     MPushNotificationConfiguration *__parseNotiConfigHashtable (void *notificationInfo);
     MPushMessage *__parseMessageHashtable (void *messageInfo);
+    
+    void __iosMobPushInitPushSDK (void *appKey, void *appScrect)
+    {
+        NSString *appKeyStr = nil, *appScrectStr = nil;
+        if (appKey)
+        {
+            appKeyStr = [NSString stringWithCString:appKey encoding:NSUTF8StringEncoding];
+        }
+        
+        if (appScrect)
+        {
+            appScrectStr = [NSString stringWithCString:appScrect encoding:NSUTF8StringEncoding];
+        }
+        
+        [MobSDK registerAppKey:appKeyStr appSecret:appScrectStr];
+    }
+    
+    void __iosMobPushBindPhoneNum (void *phoneNum)
+    {
+        NSString *phoneNumStr = nil;
+        if (phoneNum)
+        {
+            phoneNumStr = [NSString stringWithCString:phoneNum encoding:NSUTF8StringEncoding];
+        }
+        [MobPush bindPhoneNum:phoneNumStr result:^(NSError *error) {
+            
+        }];
+    }
+    
+    void __iosMobPushStopPush ()
+    {
+        [MobPush stopPush];
+    }
+    
+    void __iosMobPushRestartPush ()
+    {
+        [MobPush restartPush];
+    }
+    
+    bool __iosMobPushIsPushStopped ()
+    {
+        return [MobPush isPushStopped] ? true : false;
+    }
     
     void __iosMobPushSetBadge (int badge)
     {
@@ -63,7 +119,8 @@ extern "C" {
     
     void __iosMobPushSetAPNsForProduction (bool iosPro)
     {
-        [MobPushUnityCallback defaultCallBack].isPro = iosPro == true ? YES : NO;
+        _iosPro = iosPro == true ? YES : NO;
+        [MobPush setAPNsForProduction:_iosPro];
     }
     
     void __iosMobAddPushReceiver(void *observer)
@@ -355,7 +412,7 @@ extern "C" {
         [MobPush sendMessageWithMessageType:type
                                     content:contentParam
                                       space:@(space)
-                    isProductionEnvironment:[MobPushUnityCallback defaultCallBack].isPro
+                    isProductionEnvironment:_iosPro
                                      extras:extrasDict
                                  linkScheme:@""
                                    linkData:@""

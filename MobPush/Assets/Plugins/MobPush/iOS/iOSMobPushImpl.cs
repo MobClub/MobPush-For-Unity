@@ -54,6 +54,21 @@ namespace com.mob.mobpush
 		private static extern void __iosMobPushClearBadge();
 
 		[DllImport("__Internal")]
+		private static extern void __iosMobPushBindPhoneNum(string phoneNum);
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushStopPush();
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushRestartPush();
+
+		[DllImport("__Internal")]
+		private static extern bool __iosMobPushIsPushStopped();
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushInitPushSDK(string appKey, string appScrect);
+
+		[DllImport("__Internal")]
 		private static extern void __iosMobPushSendMessage (int type, string content, int space, string extras, string observer);
 
 		public iOSMobPushImpl (GameObject go)
@@ -64,7 +79,7 @@ namespace com.mob.mobpush
 
 		public override void initPushSDK (string appKey, string appScrect)
 		{
-			 
+			 __iosMobPushInitPushSDK(appKey, appScrect);
 		}
 		
 		public override void setAPNsForProduction (bool isPro)
@@ -147,6 +162,26 @@ namespace com.mob.mobpush
 		{
 			__iosMobPushClearBadge();
 		} 
+
+		public override void bindPhoneNum(string phoneNum)
+		{
+			__iosMobPushBindPhoneNum(phoneNum);
+		}
+
+		public override void stopPush()
+		{
+			__iosMobPushStopPush();
+		}
+
+		public override void restartPush()
+		{
+			__iosMobPushRestartPush();
+		}
+
+		public override bool isPushStopped()
+		{
+			return __iosMobPushIsPushStopped();
+		}
 
 	}
 	#endif

@@ -126,7 +126,6 @@ namespace com.mob.mobpush{
 			mobPushImpl.addPushReceiver ();
 		}
 
-#if UNITY_ANDROID
 		public void initPushSDK(string appKey, string appScrect) {
 			mobPushImpl.initPushSDK (appKey, appScrect);
 		}
@@ -143,6 +142,16 @@ namespace com.mob.mobpush{
 			return mobPushImpl.isPushStopped ();
 		}
 
+		public void setBadge(int badge) {
+			mobPushImpl.setBadge (badge);
+		}
+
+		public void clearBadge() {
+			mobPushImpl.clearBadge ();
+		}
+
+#if UNITY_ANDROID
+		
 		public void setClickNotificationToLaunchPage(bool isOpen) {
 			mobPushImpl.setClickNotificationToLaunchPage (isOpen);
 		}
