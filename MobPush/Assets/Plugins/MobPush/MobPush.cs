@@ -115,11 +115,20 @@ namespace com.mob.mobpush{
 		}
 
 		#if UNITY_IPHONE
-		public void setAPNsForProduction (bool isPro)
-		{
+		public void setAPNsForProduction (bool isPro) {
 			mobPushImpl.setAPNsForProduction(isPro);
 			
 		}
+
+
+		public void setBadge(int badge) {
+			mobPushImpl.setBadge (badge);
+		}
+
+		public void clearBadge() {
+			mobPushImpl.clearBadge ();
+		}
+		
 		#endif
 
 		public void addPushReceiver() {
@@ -142,13 +151,6 @@ namespace com.mob.mobpush{
 			return mobPushImpl.isPushStopped ();
 		}
 
-		public void setBadge(int badge) {
-			mobPushImpl.setBadge (badge);
-		}
-
-		public void clearBadge() {
-			mobPushImpl.clearBadge ();
-		}
 
 #if UNITY_ANDROID
 		

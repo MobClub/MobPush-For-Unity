@@ -18,6 +18,7 @@ namespace com.mob.mobpush{
 
        
 #if UNITY_IPHONE
+		
 		/// <summary>
         /// set APNs 环境（ios only）
         /// </summary>
@@ -54,17 +55,17 @@ namespace com.mob.mobpush{
 #endif
 
         /// <summary>
-		/// stop push（Android Only）
+		/// stop push 
 		/// </summary>
 		public abstract void stopPush ();
 
 		/// <summary>
-		/// restart Push（Android Only）
+		/// restart Push
 		/// </summary>
 		public abstract void restartPush ();
 
 		/// <summary>
-		/// isPushStop（Android Only）
+		/// isPushStop
 		/// </summary>
 		public abstract bool isPushStopped ();
 
