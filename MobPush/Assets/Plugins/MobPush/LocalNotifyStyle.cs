@@ -36,6 +36,11 @@ namespace com.mob.mobpush{
 				styleParams["badge"] = badge;
 			}
 
+			// id 唯一，否则会覆盖上一条消息，id 作为删除通知的标志
+			public void setId(string id){
+				styleParams["id"] = id;
+			}
+
 
 		#endif 
 

@@ -54,7 +54,7 @@ namespace com.mob.mobpush
 		private static extern void __iosMobPushClearBadge();
 
 		[DllImport("__Internal")]
-		private static extern void __iosMobPushBindPhoneNum(string phoneNum);
+		private static extern void __iosMobPushBindPhoneNum(string phoneNum, string observer);
 
 		[DllImport("__Internal")]
 		private static extern void __iosMobPushStopPush();
@@ -71,10 +71,26 @@ namespace com.mob.mobpush
 		[DllImport("__Internal")]
 		private static extern void __iosMobPushSendMessage (int type, string content, int space, string extras, string observer);
 
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushSetAppForegroundHidden(bool hidden);
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushDeleteLocalNotification(string[] ids);
+
 		public iOSMobPushImpl (GameObject go)
 		{
 			Debug.Log("iOSMobPushImpl  ===>>>  iOSMobPushImpl" + go.name);
 			_gameObjectName = go.name;
+		}
+
+		public override void deleteLocalNotification (string[] ids)
+		{
+			__iosMobPushDeleteLocalNotification(ids);
+		}
+
+		public override void setAppForegroundHiddenNotification (bool hidden)
+		{
+			__iosMobPushSetAppForegroundHidden(hidden);
 		}
 
 		public override void initPushSDK (string appKey, string appScrect)
@@ -89,6 +105,7 @@ namespace com.mob.mobpush
 
 		public override void addPushReceiver ()
 		{
+			Debug.Log("iOSImpl  ===>>>  addPushReceiver === ");
 			__iosMobAddPushReceiver(_gameObjectName);
 		}
 
@@ -165,7 +182,7 @@ namespace com.mob.mobpush
 
 		public override void bindPhoneNum(string phoneNum)
 		{
-			__iosMobPushBindPhoneNum(phoneNum);
+			__iosMobPushBindPhoneNum(phoneNum, _gameObjectName);
 		}
 
 		public override void stopPush()

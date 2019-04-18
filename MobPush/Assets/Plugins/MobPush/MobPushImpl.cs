@@ -16,6 +16,10 @@ namespace com.mob.mobpush{
 		/// </summary>
 		public abstract void addPushReceiver ();
 
+		/// <summary>
+		/// 设置通知是否在前台展示
+		/// </summary>
+        public abstract void setAppForegroundHiddenNotification (bool hidden);
        
 #if UNITY_IPHONE
 		
@@ -34,6 +38,11 @@ namespace com.mob.mobpush{
         /// </summary>
 		public abstract void clearBadge();
 
+		/// <summary>
+        /// 删除通知栏指定通知和未发送的定时通知，ids 是数组，如果 ids 为空，则清空所有通知 （ios only）
+        /// </summary>
+		public abstract void deleteLocalNotification(string[] ids);
+ 
 
 #elif UNITY_ANDROID
 		
@@ -48,10 +57,6 @@ namespace com.mob.mobpush{
 		/// </summary>
         public abstract void setNotifyIcon (string resIcon);
 
-        /// <summary>
-		/// Set whether the app hides notifications when it runs in the foreground（Android Only）
-		/// </summary>
-        public abstract void setAppForegroundHiddenNotification (bool hidden);
 #endif
 
         /// <summary>

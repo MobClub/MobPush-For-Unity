@@ -23,13 +23,15 @@ public class Demo : MonoBehaviour {
 		#if UNITY_IPHONE
 
 			// 真机调试 false , 上线 true
-			mobPush.setAPNsForProduction(false);
+			mobPush.setAPNsForProduction(true);
 
 			CustomNotifyStyle style = new CustomNotifyStyle ();
-		style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
+		    style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
 			mobPush.setCustomNotification(style);
 
 		#endif
+
+		Debug.Log("Demo  ===>>>  Star === ");
 	}
 
 	// Update is called once per frame

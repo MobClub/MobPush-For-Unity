@@ -26,8 +26,12 @@ namespace com.mob.mobpush{
 				//mobPushImpl.initPushSDK (appKey, appSecret);
 			#endif
 
-				mobPushImpl.addPushReceiver ();
-			
+		}
+
+		void Start() {
+
+			mobPushImpl.addPushReceiver ();
+
 		}
 
 		private void _MobPushCallback (string data) {
