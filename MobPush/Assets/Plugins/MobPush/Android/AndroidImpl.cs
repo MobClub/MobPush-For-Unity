@@ -156,6 +156,13 @@ namespace com.mob.mobpush
 			}
 		}
 
+        public override void setShowBadge (bool show){
+			Debug.Log("AndroidImpl  ===>>>  setShowBadge === "+show);
+			if(javaObj != null){
+				javaObj.Call ("setShowBadge", show);
+			}
+		}
+
 		public override void req (int type, string content, int space, string extras){
 			Debug.Log("AndroidImpl  ===>>>  req === ");
 			if(javaObj != null){
