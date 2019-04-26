@@ -36,6 +36,14 @@ extern NSString *const MobPushDidReceiveMessageNotification;
  */
 + (void)setupNotification:(MPushNotificationConfiguration *)configuration;
 
+/**
+ 设置应用在前台有 Badge、Sound、Alert 三种类型，默认3个选项都有，iOS 10 以后设置有效。
+ 如果不想前台有 Badge、Sound、Alert，设置 MPushAuthorizationOptionsNone
+
+ @param type 类型
+ */
++ (void)setAPNsShowForegroundType:(MPushAuthorizationOptions)type;
+
 #pragma mark 本地推送
 
 /**
@@ -44,6 +52,13 @@ extern NSString *const MobPushDidReceiveMessageNotification;
  @param message 消息数据
  */
 + (void)addLocalNotification:(MPushMessage *)message;
+
+/**
+ 删除指定的本地通知（可以删除未发送或者已经发送的本地通知）
+
+ @param identifiers 推送请求标识数组，为nil，删除所有通知
+ */
++ (void)removeNotificationWithIdentifiers:(NSArray <NSString *> *)identifiers;
 
 #pragma mark 推送设置
 
@@ -120,5 +135,31 @@ extern NSString *const MobPushDidReceiveMessageNotification;
  */
 + (void)clearBadge;
 
+/**
+ 绑定手机号
+
+ @param phoneNum 手机号
+ @param handler 回调
+ */
++ (void)bindPhoneNum:(NSString *)phoneNum result:(void (^) (NSError *error))handler;
+
+/**  下面的 API，方便开发者在 APP 内添加 "关闭推送" 的按钮 **/
+
+/**
+ 当前远程推送是否关闭
+ 
+ @return YES：推送关闭状态，NO：推送打开状态
+ */
++ (BOOL)isPushStopped;
+
+/**
+ 关闭远程推送（应用内推送和本地通知不送影响，只关闭远程推送）
+ */
++ (void)stopPush;
+
+/**
+ 打开远程推送
+ */
++ (void)restartPush;
 
 @end

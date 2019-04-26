@@ -13,6 +13,7 @@
 #import <MobPush/MobPush+Test.h>
 #import <MobPush/MPushMessage.h>
 #import "MobPushUnityCallback.h"
+#import <MOBFoundation/MobSDK.h>
 
 #if defined (__cplusplus)
 extern "C" {
@@ -46,13 +47,124 @@ extern "C" {
     
     extern void __iosMobPushClearBadge ();
     
+    extern void __iosMobPushBindPhoneNum(void *phoneNum, void *observer);
+    
+    extern void __iosMobPushStopPush();
+    
+    extern void __iosMobPushRestartPush();
+    
+    extern bool __iosMobPushIsPushStopped();
+    
     extern void __iosMobPushSendMessage (int type, void *content, int space, void *extras, void *observer);
+    
+    extern void __iosMobPushInitPushSDK (void *appKey, void *appScrect);
+    
+    extern void __iosMobPushDeleteLocalNotification (void *ids);
+    
+    extern void __iosMobPushSetAppForegroundHidden (bool hidden);
+    
+    BOOL _iosPro;
     
     MPushNotificationConfiguration *__parseNotiConfigHashtable (void *notificationInfo);
     MPushMessage *__parseMessageHashtable (void *messageInfo);
     
+    void __iosMobPushSetAppForegroundHidden (bool hidden)
+    {
+        if (hidden)
+        {
+            [MobPush setAPNsShowForegroundType:MPushAuthorizationOptionsNone];
+        }
+        else
+        {
+            [MobPush setAPNsShowForegroundType:MPushAuthorizationOptionsSound | MPushAuthorizationOptionsAlert | MPushAuthorizationOptionsBadge];
+        }
+    }
+    
+    void __iosMobPushDeleteLocalNotification (void *ids)
+    {
+        if (ids)
+        {
+            NSString *theParamsStr = [NSString stringWithCString:ids encoding:NSUTF8StringEncoding];
+            NSArray *idParams = nil;
+            
+            if (theParamsStr)
+            {
+                idParams = [theParamsStr componentsSeparatedByString:@","];
+            }
+            [MobPush removeNotificationWithIdentifiers:idParams];
+        }
+        else
+        {
+            [MobPush removeNotificationWithIdentifiers:nil];
+        }
+    }
+    
+    void __iosMobPushInitPushSDK (void *appKey, void *appScrect)
+    {
+        NSString *appKeyStr = nil, *appScrectStr = nil;
+        if (appKey)
+        {
+            appKeyStr = [NSString stringWithCString:appKey encoding:NSUTF8StringEncoding];
+        }
+        
+        if (appScrect)
+        {
+            appScrectStr = [NSString stringWithCString:appScrect encoding:NSUTF8StringEncoding];
+        }
+        
+        [MobSDK registerAppKey:appKeyStr appSecret:appScrectStr];
+    }
+    
+    void __iosMobPushBindPhoneNum (void *phoneNum, void *observer)
+    {
+        NSString *observerStr = nil;
+        if (observer)
+        {
+            observerStr = [NSString stringWithCString:observer encoding:NSUTF8StringEncoding];
+        }
+        
+        NSString *phoneNumStr = nil;
+        if (phoneNum)
+        {
+            phoneNumStr = [NSString stringWithCString:phoneNum encoding:NSUTF8StringEncoding];
+        }
+        [MobPush bindPhoneNum:phoneNumStr result:^(NSError *error) {
+            NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+            
+            if (error)
+            {
+                resultDict[@"result"] = @"0";
+            }
+            else
+            {
+                resultDict[@"result"] = @"1";
+            }
+            
+            // 转成 json 字符串
+            NSString *resultStr = [MOBFJson jsonStringFromObject:resultDict];
+            
+            UnitySendMessage([observerStr UTF8String], "_MobPushBindPhoneNumCallback", [resultStr UTF8String]);
+        }];
+    }
+    
+    void __iosMobPushStopPush ()
+    {
+        [MobPush stopPush];
+    }
+    
+    void __iosMobPushRestartPush ()
+    {
+        [MobPush restartPush];
+    }
+    
+    bool __iosMobPushIsPushStopped ()
+    {
+        return [MobPush isPushStopped] ? true : false;
+    }
+    
     void __iosMobPushSetBadge (int badge)
     {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
         [MobPush setBadge:(NSInteger)badge];
     }
     
@@ -63,7 +175,8 @@ extern "C" {
     
     void __iosMobPushSetAPNsForProduction (bool iosPro)
     {
-        [MobPushUnityCallback defaultCallBack].isPro = iosPro == true ? YES : NO;
+        _iosPro = iosPro == true ? YES : NO;
+        [MobPush setAPNsForProduction:_iosPro];
     }
     
     void __iosMobAddPushReceiver(void *observer)
@@ -355,7 +468,7 @@ extern "C" {
         [MobPush sendMessageWithMessageType:type
                                     content:contentParam
                                       space:@(space)
-                    isProductionEnvironment:[MobPushUnityCallback defaultCallBack].isPro
+                    isProductionEnvironment:_iosPro
                                      extras:extrasDict
                                  linkScheme:@""
                                    linkData:@""
@@ -395,6 +508,7 @@ extern "C" {
         
         MPushMessage *message = [[MPushMessage alloc] init];
         message.messageType = MPushMessageTypeLocal;
+        message.identifier = eventParams[@"id"];
         MPushNotification *noti = [[MPushNotification alloc] init];
         
         noti.title = eventParams[@"title"];

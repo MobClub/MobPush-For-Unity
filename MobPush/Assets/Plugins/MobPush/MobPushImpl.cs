@@ -16,27 +16,36 @@ namespace com.mob.mobpush{
 		/// </summary>
 		public abstract void addPushReceiver ();
 
-        /// <summary>
+		/// <summary>
+		/// 设置通知是否在前台展示
+		/// </summary>
+        public abstract void setAppForegroundHiddenNotification (bool hidden);
+       
+#if UNITY_IPHONE
+		
+		/// <summary>
         /// set APNs 环境（ios only）
         /// </summary>
-#if UNITY_IPHONE
 		public abstract void setAPNsForProduction (bool isPro);
 
+		/// <summary>
+        /// 设置角标（ios only）
+        /// </summary>
+		public abstract void setBadge(int badge);
+
+		/// <summary>
+        /// 清除角标 （ios only）
+        /// </summary>
+		public abstract void clearBadge();
+
+		/// <summary>
+        /// 删除通知栏指定通知和未发送的定时通知，ids 是数组，如果 ids 为空，则清空所有通知 （ios only）
+        /// </summary>
+		public abstract void deleteLocalNotification(string[] ids);
+ 
+
 #elif UNITY_ANDROID
-		/// <summary>
-		/// stop push（Android Only）
-		/// </summary>
-		public abstract void stopPush ();
-
-		/// <summary>
-		/// restart Push（Android Only）
-		/// </summary>
-		public abstract void restartPush ();
-
-		/// <summary>
-		/// isPushStop（Android Only）
-		/// </summary>
-		public abstract bool isPushStopped ();
+		
 
 		/// <summary>
 		/// Open the launch activity after click notification（Android Only）
@@ -48,11 +57,22 @@ namespace com.mob.mobpush{
 		/// </summary>
         public abstract void setNotifyIcon (string resIcon);
 
-        /// <summary>
-		/// Set whether the app hides notifications when it runs in the foreground（Android Only）
-		/// </summary>
-        public abstract void setAppForegroundHiddenNotification (bool hidden);
 #endif
+
+        /// <summary>
+		/// stop push 
+		/// </summary>
+		public abstract void stopPush ();
+
+		/// <summary>
+		/// restart Push
+		/// </summary>
+		public abstract void restartPush ();
+
+		/// <summary>
+		/// isPushStop
+		/// </summary>
+		public abstract bool isPushStopped ();
 
         /// <summary>
         /// getRegistrationId.

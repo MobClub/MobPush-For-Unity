@@ -28,11 +28,6 @@
     return instance;
 }
 
-- (void)didFinishLaunching
-{
-    [MobPush setAPNsForProduction:_isPro];
-}
-
 - (void)addPushObserver:(NSString *)observer
 {
     _observerStr = observer;

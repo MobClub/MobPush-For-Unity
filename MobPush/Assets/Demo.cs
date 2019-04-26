@@ -23,13 +23,15 @@ public class Demo : MonoBehaviour {
 		#if UNITY_IPHONE
 
 			// 真机调试 false , 上线 true
-			mobPush.setAPNsForProduction(false);
+			mobPush.setAPNsForProduction(true);
 
 			CustomNotifyStyle style = new CustomNotifyStyle ();
-		style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
+		    style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
 			mobPush.setCustomNotification(style);
 
 		#endif
+
+		Debug.Log("Demo  ===>>>  Star === ");
 	}
 
 	// Update is called once per frame
@@ -165,12 +167,14 @@ public class Demo : MonoBehaviour {
 
         if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "bindPhoneNum"))
 		{
-			mobPush.bindPhoneNum ("12345678988");
+			mobPush.bindPhoneNum ("123456");
 		}
+
 
 #if UNITY_ANDROID
 
-        btnTop += btnHeight + 20 * scale;
+        
+		btnTop += btnHeight + 20 * scale;
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "stopPush"))
 		{
 			mobPush.stopPush ();
@@ -186,7 +190,7 @@ public class Demo : MonoBehaviour {
 		{
 			mobPush.isPushStopped();
 		}
-
+        
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "setClickNotificationToLaunchPage"))
 		{
 			mobPush.setClickNotificationToLaunchPage(false);

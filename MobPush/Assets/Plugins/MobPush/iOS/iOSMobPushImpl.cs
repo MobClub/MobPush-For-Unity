@@ -54,7 +54,28 @@ namespace com.mob.mobpush
 		private static extern void __iosMobPushClearBadge();
 
 		[DllImport("__Internal")]
+		private static extern void __iosMobPushBindPhoneNum(string phoneNum, string observer);
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushStopPush();
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushRestartPush();
+
+		[DllImport("__Internal")]
+		private static extern bool __iosMobPushIsPushStopped();
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushInitPushSDK(string appKey, string appScrect);
+
+		[DllImport("__Internal")]
 		private static extern void __iosMobPushSendMessage (int type, string content, int space, string extras, string observer);
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushSetAppForegroundHidden(bool hidden);
+
+		[DllImport("__Internal")]
+		private static extern void __iosMobPushDeleteLocalNotification(string[] ids);
 
 		public iOSMobPushImpl (GameObject go)
 		{
@@ -62,9 +83,19 @@ namespace com.mob.mobpush
 			_gameObjectName = go.name;
 		}
 
+		public override void deleteLocalNotification (string[] ids)
+		{
+			__iosMobPushDeleteLocalNotification(ids);
+		}
+
+		public override void setAppForegroundHiddenNotification (bool hidden)
+		{
+			__iosMobPushSetAppForegroundHidden(hidden);
+		}
+
 		public override void initPushSDK (string appKey, string appScrect)
 		{
-			 
+			 __iosMobPushInitPushSDK(appKey, appScrect);
 		}
 		
 		public override void setAPNsForProduction (bool isPro)
@@ -74,6 +105,7 @@ namespace com.mob.mobpush
 
 		public override void addPushReceiver ()
 		{
+			Debug.Log("iOSImpl  ===>>>  addPushReceiver === ");
 			__iosMobAddPushReceiver(_gameObjectName);
 		}
 
@@ -147,6 +179,26 @@ namespace com.mob.mobpush
 		{
 			__iosMobPushClearBadge();
 		} 
+
+		public override void bindPhoneNum(string phoneNum)
+		{
+			__iosMobPushBindPhoneNum(phoneNum, _gameObjectName);
+		}
+
+		public override void stopPush()
+		{
+			__iosMobPushStopPush();
+		}
+
+		public override void restartPush()
+		{
+			__iosMobPushRestartPush();
+		}
+
+		public override bool isPushStopped()
+		{
+			return __iosMobPushIsPushStopped();
+		}
 
 	}
 	#endif

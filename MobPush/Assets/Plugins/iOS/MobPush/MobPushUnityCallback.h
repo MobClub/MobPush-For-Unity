@@ -12,10 +12,6 @@
 
 + (instancetype)defaultCallBack;
 
-@property (nonatomic, assign) BOOL isPro;
-
 - (void)addPushObserver:(NSString *)observer;
-
-- (void)didFinishLaunching;
 
 @end
