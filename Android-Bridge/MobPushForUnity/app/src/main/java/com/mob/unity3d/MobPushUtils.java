@@ -303,6 +303,17 @@ public class MobPushUtils {
 	}
 
 	/**
+	 * 绑定手机号
+	 * @param show 手机号
+	 */
+	public void setShowBadge(boolean show){
+		if(DEBUG) {
+			System.out.println("setShowBadge:" + show);
+		}
+		MobPush.setShowBadge(show);
+	}
+
+	/**
 	 * demo的请求接口
 	 * @param type 消息类型：1、通知测试；2、内推测试；3、定时
 	 * @param content 文本
