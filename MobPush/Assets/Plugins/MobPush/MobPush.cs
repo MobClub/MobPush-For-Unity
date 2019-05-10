@@ -128,10 +128,27 @@ namespace com.mob.mobpush{
 			mobPushImpl.clearBadge();
 		}
 
+		public void deleteLocalNotification (string[] ids) {
+			mobPushImpl.deleteLocalNotification(ids);
+		}
+
 #endif
 
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID 
+		
+		public void setClickNotificationToLaunchPage(bool isOpen) {
+			mobPushImpl.setClickNotificationToLaunchPage (isOpen);
+		}
+        
+        public void setNotifyIcon(string resIcon) {
+			mobPushImpl.setNotifyIcon (resIcon);
+		}
+        
+        public void setShowBadge(bool show) {
+			mobPushImpl.setShowBadge (show);
+		}
+#endif
 
 		public void initPushSDK(string appKey, string appScrect) {
 			mobPushImpl.initPushSDK (appKey, appScrect);
@@ -148,19 +165,6 @@ namespace com.mob.mobpush{
 		public bool isPushStopped() {
 			return mobPushImpl.isPushStopped ();
 		}
-
-		public void setClickNotificationToLaunchPage(bool isOpen) {
-			mobPushImpl.setClickNotificationToLaunchPage (isOpen);
-		}
-        
-        public void setNotifyIcon(string resIcon) {
-			mobPushImpl.setNotifyIcon (resIcon);
-		}
-        
-        public void setShowBadge(bool show) {
-			mobPushImpl.setShowBadge (show);
-		}
-#endif
 
 		public void addPushReceiver() {
 			mobPushImpl.addPushReceiver ();
