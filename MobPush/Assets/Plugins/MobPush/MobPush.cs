@@ -114,19 +114,25 @@ namespace com.mob.mobpush{
 			}
 		}
 
-		#if UNITY_IPHONE
-		public void setAPNsForProduction (bool isPro)
-		{
-			mobPushImpl.setAPNsForProduction(isPro);
-			
-		}
-		#endif
+#if UNITY_IPHONE
 
-		public void addPushReceiver() {
-			mobPushImpl.addPushReceiver ();
+		public void setAPNsForProduction (bool isPro) {
+			mobPushImpl.setAPNsForProduction(isPro);
 		}
+
+		public void setBadge(int badge) {
+			mobPushImpl.setBadge(badge);
+		}
+
+		public void clearBadge () {
+			mobPushImpl.clearBadge();
+		}
+
+#endif
+
 
 #if UNITY_ANDROID
+
 		public void initPushSDK(string appKey, string appScrect) {
 			mobPushImpl.initPushSDK (appKey, appScrect);
 		}
@@ -151,14 +157,18 @@ namespace com.mob.mobpush{
 			mobPushImpl.setNotifyIcon (resIcon);
 		}
         
-        public void setAppForegroundHiddenNotification(bool hidden) {
-			mobPushImpl.setAppForegroundHiddenNotification (hidden);
-		}
-        
         public void setShowBadge(bool show) {
 			mobPushImpl.setShowBadge (show);
 		}
 #endif
+
+		public void addPushReceiver() {
+			mobPushImpl.addPushReceiver ();
+		}
+
+		public void setAppForegroundHiddenNotification(bool hidden) {
+			mobPushImpl.setAppForegroundHiddenNotification (hidden);
+		}
 
         public void getRegistrationId() {
 			mobPushImpl.getRegistrationId ();
