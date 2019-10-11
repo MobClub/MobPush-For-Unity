@@ -211,7 +211,7 @@ public class MobPushUtils {
 	}
 
 	/**
-	 * 本地通知
+	 * 添加本地通知
 	 */
 	public void setMobPushLocalNotification(String reqJson){
 		if (DEBUG) {
@@ -248,9 +248,33 @@ public class MobPushUtils {
 		if(map.containsKey("style")){
 			mobPushLocalNotification.setStyle(Integer.valueOf((String)map.get("style")));
 		}
-		mobPushLocalNotification.setNotificationId(new Random().nextInt());
+        if(map.containsKey("id")){
+            mobPushLocalNotification.setNotificationId(Integer.valueOf((String)map.get("id")));
+        } else {
+            mobPushLocalNotification.setNotificationId(new Random().nextInt());
+        }
 		System.out.println("LocalNotify style:" + mobPushLocalNotification.toString());
 		MobPush.addLocalNotification(mobPushLocalNotification);
+	}
+
+	/**
+	 * 移除本地通知
+	 *
+	 * @param strIds 本地通知的ID集合字符串
+	 * */
+	public void deleteLocalNotification(String strIds) {
+		if (DEBUG) {
+			System.out.println("deleteLocalNotification");
+		}
+		String[] ids = strIds.split(",");
+		try {
+			for (String id : ids) {
+				MobPush.removeLocalNotification(Integer.valueOf(id));
+			}
+		} catch (Exception e) {
+			System.out.println("deleteLocalNotification error");
+			e.printStackTrace();
+		}
 	}
 
 	/**
