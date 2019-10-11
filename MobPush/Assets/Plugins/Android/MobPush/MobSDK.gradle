@@ -1,0 +1,39 @@
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "moba6b6c6d6"
+    appSecret "b89d2427a3bc7ad1aea1e1e8c1d36bf3"
+
+
+    MobGUI(true)
+    MobPush {
+        devInfo {
+            HUAWEI {
+                appId "100215127"
+            }
+
+            MEIZU {
+                appId "112481"
+                appKey "03dd70b9be434446a7255c8586e1725a"
+            }
+
+            XIAOMI {
+                appId "2882303761517721670"
+                appKey "5671772162670"
+            }
+			
+			FCM {
+                //设置默认推送通知显示图标
+                iconRes "@mipmap/ic_launcher"
+            }
+
+       
+            //此处OPPO的配置信息只是用来展示配置示例，不能用了测试OPPO通道推送，如需推送请替换成自己的正确应用信息
+
+//            OPPO {
+//                appKey "OPPO 的 appKey"
+//                appSecret "OPPO 的appSecret"
+//            }
+        }
+    }
+}
