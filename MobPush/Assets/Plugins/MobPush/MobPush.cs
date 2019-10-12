@@ -128,10 +128,6 @@ namespace com.mob.mobpush{
 			mobPushImpl.clearBadge();
 		}
 
-		public void deleteLocalNotification (string[] ids) {
-			mobPushImpl.deleteLocalNotification(ids);
-		}
-
 #endif
 
 
@@ -223,7 +219,11 @@ namespace com.mob.mobpush{
 			mobPushImpl.req (type, content, space, jsonStr);
 		}
 
-		public delegate void OnNotifyCallback (int action, Hashtable resulte);
+        public void deleteLocalNotification(string[] ids) {
+            mobPushImpl.deleteLocalNotification(ids);
+        }
+
+        public delegate void OnNotifyCallback (int action, Hashtable resulte);
 
 		public delegate void OnTagsCallback (int action, string[] tags, int operation, int errorCode);
 

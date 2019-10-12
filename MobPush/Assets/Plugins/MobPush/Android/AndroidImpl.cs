@@ -169,6 +169,14 @@ namespace com.mob.mobpush
 				javaObj.Call ("req", type, content, space, extras);
 			}
 		}
+
+      public override void deleteLocalNotification(string[] ids){
+			Debug.Log("AndroidImpl  ===>>>  deleteLocalNotification === ");
+			if(javaObj != null){
+                string stringIds = String.Join (",", ids);
+				javaObj.Call ("deleteLocalNotification",stringIds);
+			}
+		}
 	}
 #endif
 }

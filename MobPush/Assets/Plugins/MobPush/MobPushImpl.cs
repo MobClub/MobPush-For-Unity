@@ -52,11 +52,6 @@ namespace com.mob.mobpush{
         /// </summary>
 		public abstract void clearBadge();
 
-		/// <summary>
-        /// 删除通知中心的通知（ios only）
-        /// </summary>
-		public abstract void deleteLocalNotification (string[] ids);
-
 #elif UNITY_ANDROID
 		
 		/// <summary>
@@ -137,6 +132,11 @@ namespace com.mob.mobpush{
         /// </summary>
         public abstract void req (int type,  String content, int space, String extras);
 
-	}
+        /// <summary>
+        /// 删除通知中心的通知
+        /// </summary>
+        public abstract void deleteLocalNotification(string[] ids);
+
+    }
 }
 

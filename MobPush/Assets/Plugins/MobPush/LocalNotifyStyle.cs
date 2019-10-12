@@ -22,7 +22,12 @@ namespace com.mob.mobpush{
 			styleParams["timeStamp"] = timeStamp;
 		}
 
-		#if UNITY_IPHONE
+        // id 唯一，否则会覆盖上一条消息，id 作为删除通知的标志
+        public void setId(string id) {
+            styleParams["id"] = id;
+        }
+
+#if UNITY_IPHONE
 
 			public void setSubTitle(string subTitle){
 				styleParams["subTitle"] = subTitle;
@@ -36,15 +41,10 @@ namespace com.mob.mobpush{
 				styleParams["badge"] = badge;
 			}
 
-			// id 唯一，否则会覆盖上一条消息，id 作为删除通知的标志
-			public void setId(string id){
-				styleParams["id"] = id;
-			}
 
+#endif
 
-		#endif 
-
-		#if UNITY_ANDROID
+#if UNITY_ANDROID
 
 			public void setStyle(int style){
 				styleParams ["style"] = style;
@@ -72,9 +72,9 @@ namespace com.mob.mobpush{
 				styleParams["extras"] = extrasStr;
 			}
 
-		#endif
+#endif
 
-		public String getStyleParamsStr() {
+        public String getStyleParamsStr() {
 			String jsonStr = MiniJSON.jsonEncode (styleParams);
 			Debug.Log("StyleParams  ===>>> " + jsonStr );
 			return jsonStr;
