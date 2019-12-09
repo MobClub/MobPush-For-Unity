@@ -509,6 +509,7 @@ extern "C" {
         MPushMessage *message = [[MPushMessage alloc] init];
         message.messageType = MPushMessageTypeLocal;
         message.identifier = eventParams[@"id"];
+        message.extraInfomation = eventParams[@"extras"];
         MPushNotification *noti = [[MPushNotification alloc] init];
         
         noti.title = eventParams[@"title"];

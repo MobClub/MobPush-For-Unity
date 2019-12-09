@@ -171,6 +171,7 @@
             NSString *subtitle = message.notification.subTitle;
             NSInteger badge = message.notification.badge;
             NSString *sound = message.notification.sound;
+            NSDictionary *userinfo = message.msgInfo;
             if (body)
             {
                 [reslut setObject:body forKey:@"content"];
@@ -196,6 +197,10 @@
                 [reslut setObject:sound forKey:@"sound"];
             }
             
+            if (userinfo)
+            {
+                [reslut setObject:userinfo forKey:@"extras"];
+            }
             
             [resultDict setObject:@1 forKey:@"action"];
             
@@ -287,6 +292,7 @@
                 NSString *subtitle = message.notification.subTitle;
                 NSInteger badge = message.notification.badge;
                 NSString *sound = message.notification.sound;
+                NSDictionary *userinfo = message.msgInfo;
                 if (body)
                 {
                     [reslut setObject:body forKey:@"content"];
@@ -310,6 +316,11 @@
                 if (sound)
                 {
                     [reslut setObject:sound forKey:@"sound"];
+                }
+                
+                if (userinfo)
+                {
+                    [reslut setObject:userinfo forKey:@"extras"];
                 }
                 
                 [resultDict setObject:@2 forKey:@"action"];
