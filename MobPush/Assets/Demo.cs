@@ -82,14 +82,10 @@ public class Demo : MonoBehaviour {
 			LocalNotifyStyle style = new LocalNotifyStyle ();
 			style.setContent ("Text");
 			style.setTitle ("title");
-
-		#if UNITY_ANDROID
 			Hashtable extras = new Hashtable ();
 			extras["key1"] = "value1";
 			extras["key2"] = "value1";
 			style.setExtras (extras);
-		#endif
-			
 			mobPush.setMobPushLocalNotification (style);	
 		}
 
