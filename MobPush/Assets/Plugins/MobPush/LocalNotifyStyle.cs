@@ -27,6 +27,11 @@ namespace com.mob.mobpush{
             styleParams["id"] = id;
         }
 
+        public void setExtras(Hashtable extras){
+			string extrasStr = MiniJSON.jsonEncode (extras);
+			styleParams["extras"] = extrasStr;
+		}
+
 #if UNITY_IPHONE
 
 			public void setSubTitle(string subTitle){
@@ -65,11 +70,6 @@ namespace com.mob.mobpush{
 
 			public void setLinght(bool isLight){
 				styleParams["isLight"] = isLight;
-			}
-
-			public void setExtras(Hashtable extras){
-				string extrasStr = MiniJSON.jsonEncode (extras);
-				styleParams["extras"] = extrasStr;
 			}
 
 #endif

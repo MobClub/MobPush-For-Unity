@@ -233,8 +233,8 @@ public class MobPushUtils {
 			HashMap<String, String> extrasMap = hashon.fromJson((String)map.get("extras"));
 			mobPushLocalNotification.setExtrasMap(extrasMap);
 		}
-		if(map.containsKey("timestamp")){
-			mobPushLocalNotification.setTimestamp(Long.valueOf((String)map.get("timestamp")) + System.currentTimeMillis());
+		if(map.containsKey("timeStamp")){
+			mobPushLocalNotification.setTimestamp(Long.valueOf((String)map.get("timeStamp")) + System.currentTimeMillis());
 		}
 		if(map.containsKey("isVoice")){
 			mobPushLocalNotification.setVoice(Boolean.valueOf((String)map.get("isVoice")));
