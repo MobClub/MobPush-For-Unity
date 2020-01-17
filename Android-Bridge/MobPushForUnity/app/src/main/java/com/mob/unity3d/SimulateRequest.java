@@ -59,7 +59,7 @@ public class SimulateRequest {
 					commonMap.put("extras", extras);
 				}
 				System.out.println("请求参数:" + commonMap);
-				getMobCommunicator().request(commonMap, "http://sdk.push.mob.com/demo/push", false, new MobCommunicator.Callback<HashMap<String, Object>>() {
+				getMobCommunicator().request(commonMap, "https://sdk.push.mob.com/demo/v2/push", false, new MobCommunicator.Callback<HashMap<String, Object>>() {
 					public void onResultOk(HashMap<String, Object> data) {
 						if (callback != null) {
 							callback.onCallback(true);

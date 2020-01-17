@@ -234,7 +234,12 @@ public class MobPushUtils {
 			mobPushLocalNotification.setExtrasMap(extrasMap);
 		}
 		if(map.containsKey("timeStamp")){
-			mobPushLocalNotification.setTimestamp(Long.valueOf((String)map.get("timeStamp")) + System.currentTimeMillis());
+		    try {
+				String timeStamp = String.valueOf(map.get("timeStamp"));
+				mobPushLocalNotification.setTimestamp(Long.valueOf(timeStamp)+ System.currentTimeMillis());
+			}catch (Throwable t){
+		    	t.printStackTrace();
+			}
 		}
 		if(map.containsKey("isVoice")){
 			mobPushLocalNotification.setVoice(Boolean.valueOf((String)map.get("isVoice")));
