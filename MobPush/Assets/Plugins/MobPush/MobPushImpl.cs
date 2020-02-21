@@ -35,7 +35,11 @@ namespace com.mob.mobpush{
 		/// </summary>
         public abstract void setAppForegroundHiddenNotification (bool hidden); 
 
-        
+       	/// <summary>
+		/// Set whether the app user agree mobtech privacy Protocol
+		/// </summary>
+        public abstract void updatePrivacyPermissionStatus (bool agree); 
+
 #if UNITY_IPHONE
 		/// <summary>
         /// set APNs 环境（ios only）
