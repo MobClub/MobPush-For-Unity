@@ -170,6 +170,14 @@ namespace com.mob.mobpush
 			}
 		}
 
+        public override void updatePrivacyPermissionStatus (bool agree){
+			Debug.Log("AndroidImpl  ===>>>  updatePrivacyPermissionStatus  ==="+agree);
+			if(javaObj != null){
+				javaObj.Call ("updatePrivacyPermissionStatus", agree);
+			}
+		}
+
+
       public override void deleteLocalNotification(string[] ids){
 			Debug.Log("AndroidImpl  ===>>>  deleteLocalNotification === ");
 			if(javaObj != null){
