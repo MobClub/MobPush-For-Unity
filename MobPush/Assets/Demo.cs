@@ -19,6 +19,9 @@ public class Demo : MonoBehaviour {
 		mobPush.onRegIdCallback = OnRegIdHandler;
 		mobPush.onBindPhoneNumCallback = OnBindPhoneNumHandler;
 
+		// 假设用户同意隐私协议许可
+		mobPush.updatePrivacyPermissionStatus(true);
+		
 		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom (only ios)
 		#if UNITY_IPHONE
 

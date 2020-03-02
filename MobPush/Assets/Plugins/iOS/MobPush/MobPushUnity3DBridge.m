@@ -14,6 +14,7 @@
 #import <MobPush/MPushMessage.h>
 #import "MobPushUnityCallback.h"
 #import <MOBFoundation/MobSDK.h>
+#import <MOBFoundation/MobSDK+Privacy.h>
 
 #if defined (__cplusplus)
 extern "C" {
@@ -63,6 +64,8 @@ extern "C" {
     
     extern void __iosMobPushSetAppForegroundHidden (bool hidden);
     
+    extern void __iosUpdatePrivacyPermissionStatus (bool agree);
+    
     BOOL _iosPro;
     
     MPushNotificationConfiguration *__parseNotiConfigHashtable (void *notificationInfo);
@@ -78,6 +81,18 @@ extern "C" {
         {
             [MobPush setAPNsShowForegroundType:MPushAuthorizationOptionsSound | MPushAuthorizationOptionsAlert | MPushAuthorizationOptionsBadge];
         }
+    }
+    
+    void __iosUpdatePrivacyPermissionStatus (bool agree)
+    {
+        [MobSDK uploadPrivacyPermissionStatus:YES onResult:^(BOOL success) {
+            if (success)
+            {
+                NSLog(@"[MobPush_Plugin]:隐私协议许可状态上传成功");
+            }else{
+                NSLog(@"[MobPush_Plugin]:隐私协议许可状态上传失败");
+            }
+        }];
     }
     
     void __iosMobPushDeleteLocalNotification (void *ids)

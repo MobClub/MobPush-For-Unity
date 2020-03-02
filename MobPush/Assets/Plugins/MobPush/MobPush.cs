@@ -150,6 +150,10 @@ namespace com.mob.mobpush{
 			mobPushImpl.initPushSDK (appKey, appScrect);
 		}
 
+		public void updatePrivacyPermissionStatus (bool agree){
+			mobPushImpl.updatePrivacyPermissionStatus(agree);
+		}
+
 		public void stopPush() {
 			mobPushImpl.stopPush ();
 		}
