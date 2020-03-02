@@ -118,7 +118,7 @@ public class Demo : MonoBehaviour {
 			mobPush.getRegistrationId ();
 		}
 
-		//Test Code
+		//Test Code //
 		btnTop += btnHeight + 20 * scale;
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "addTags"))
 		{
@@ -203,6 +203,7 @@ public class Demo : MonoBehaviour {
 #endif
     }
 
+	
     void OnNitifyHandler (int action, Hashtable resulte)
 	{
 		Debug.Log ("OnNitifyHandler");
