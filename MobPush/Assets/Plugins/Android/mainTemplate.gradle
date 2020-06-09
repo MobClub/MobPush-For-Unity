@@ -4,6 +4,9 @@ buildscript {
     repositories {
 	    google()
         jcenter()
+        maven {
+            url "http://mvn.mob.com/android"
+        }
     }
 
     dependencies {
@@ -17,6 +20,9 @@ allprojects {
     repositories {
         flatDir {
             dirs 'libs'
+        }
+        maven {
+            url "http://mvn.mob.com/android"
         }
     }
 }
