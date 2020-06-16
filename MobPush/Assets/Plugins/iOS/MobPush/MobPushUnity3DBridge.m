@@ -483,12 +483,14 @@ extern "C" {
         [MobPush sendMessageWithMessageType:type
                                     content:contentParam
                                       space:@(space)
+                                      sound:nil
                     isProductionEnvironment:_iosPro
                                      extras:extrasDict
                                  linkScheme:@""
                                    linkData:@""
-                                     result:^(NSError *error) {
-                                         
+                                    coverId:nil
+                                     result:^(NSString *workId, NSError *error) {
+                            
                                          NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
                                         
                                          if (error)
