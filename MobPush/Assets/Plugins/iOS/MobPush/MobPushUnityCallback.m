@@ -49,282 +49,76 @@
         {// 自定义消息
             [resultDict setObject:@0 forKey:@"action"];
 
-            if (message.extraInfomation)
-            {
-                [reslut setObject:message.extraInfomation forKey:@"extra"];
-            }
-            
-            if (message.content)
-            {
-                [reslut setObject:message.content forKey:@"content"];
-            }
-            
-            if (message.messageID)
-            {
-                [reslut setObject:message.messageID forKey:@"messageId"];
-            }
-            
-            if (message.currentServerTimestamp)
-            {
-                [reslut setObject:@(message.currentServerTimestamp) forKey:@"timeStamp"];
-            }
+//            if (message.notification.userInfo)
+//            {
+//                [reslut setObject:message.notification.userInfo forKey:@"extra"];
+//            }
+//
+//            if (message.notification.body)
+//            {
+//                [reslut setObject:message.notification.body forKey:@"content"];
+//            }
+//
+//            if (message.messageID)
+//            {
+//                [reslut setObject:message.messageID forKey:@"messageId"];
+//            }
+            [reslut addEntriesFromDictionary:message.convertDictionary];
         }
             break;
         case MPushMessageTypeAPNs:
         {// APNs 回调
-            /*
-            {
-                1 = 2;
-                aps =     {
-                    alert =         {
-                        body = 1;
-                        subtitle = 1;
-                        title = 1;
-                    };
-                    "content-available" = 1;
-                    "mutable-content" = 1;
-                };
-                mobpushMessageId = 159346875878223872;
-            }
-             */
-            if (message.msgInfo)
-            {
-                NSDictionary *aps = message.msgInfo[@"aps"];
-                if ([aps isKindOfClass:[NSDictionary class]])
-                {
-                    NSDictionary *alert = aps[@"alert"];
-                    if ([alert isKindOfClass:[NSDictionary class]])
-                    {
-                        NSString *body = alert[@"body"];
-                        if (body)
-                        {
-                            [reslut setObject:body forKey:@"content"];
-                        }
-                        
-                        NSString *subtitle = alert[@"subtitle"];
-                        if (subtitle)
-                        {
-                            [reslut setObject:subtitle forKey:@"subtitle"];
-                        }
-                        
-                        NSString *title = alert[@"title"];
-                        if (title)
-                        {
-                            [reslut setObject:title forKey:@"title"];
-                        }
-                    }
-                    
-                    NSString *sound = aps[@"sound"];
-                    if (sound)
-                    {
-                        [reslut setObject:sound forKey:@"sound"];
-                    }
-                    
-                    NSInteger badge = [aps[@"badge"] integerValue];
-                    if (badge)
-                    {
-                        [reslut setObject:@(badge) forKey:@"badge"];
-                    }
-                    
-                }
-            }
+//            [reslut addEntriesFromDictionary:message.notification.convertDictionary];
+//            [reslut setObject:message.notification.body forKey:@"content"];
+//
+//            NSString *messageId = message.messageID;
+//            if (messageId)
+//            {
+//                [reslut setObject:messageId forKey:@"messageId"];
+//            }
+//
+//            if (message.notification.userInfo)
+//            {
+//                [reslut setObject:message.notification.userInfo forKey:@"extra"];
+//            }
+//            reslut[@"identifier"] = message.identifier;
             
-            NSString *messageId = message.msgInfo[@"mobpushMessageId"];
-            if (messageId)
-            {
-                [reslut setObject:messageId forKey:@"messageId"];
-            }
-            
-            NSMutableDictionary *extra = [NSMutableDictionary dictionary];
-            [message.msgInfo enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-               
-                if (![key isEqualToString:@"aps"] && ![key isEqualToString:@"mobpushMessageId"])
-                {
-                    [extra setObject:obj forKey:key];
-                }
-                
-            }];
-            
-            if (extra.count)
-            {
-                [reslut setObject:extra forKey:@"extra"];
-            }
+            [reslut addEntriesFromDictionary:message.convertDictionary];
             
             [resultDict setObject:@1 forKey:@"action"];
-            
-            //            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
-            //            {
-            //                // 前台收到
-            //                [resultDict setObject:@1 forKey:@"action"];
-            //            }
-            //            else
-            //            {
-            //                // 点击通知
-            //                [resultDict setObject:@2 forKey:@"action"];
-            //            }
         }
             break;
         case MPushMessageTypeLocal:
         { // 本地通知回调
-            NSString *body = message.notification.body;
-            NSString *title = message.notification.title;
-            NSString *subtitle = message.notification.subTitle;
-            NSInteger badge = message.notification.badge;
-            NSString *sound = message.notification.sound;
-            NSDictionary *userinfo = message.msgInfo;
-            if (body)
-            {
-                [reslut setObject:body forKey:@"content"];
-            }
             
-            if (title)
-            {
-                [reslut setObject:title forKey:@"title"];
-            }
+//            [reslut addEntriesFromDictionary:message.notification.convertDictionary];
+//            [reslut setObject:message.notification.body forKey:@"content"];
+//
+//            if (message.notification.userInfo)
+//            {
+//                [reslut setObject:message.notification.userInfo forKey:@"extras"];
+//            }
+//            reslut[@"identifier"] = message.identifier;
             
-            if (subtitle)
-            {
-                [reslut setObject:subtitle forKey:@"subtitle"];
-            }
-            
-            if (badge)
-            {
-                [reslut setObject:@(badge) forKey:@"badge"];
-            }
-            
-            if (sound)
-            {
-                [reslut setObject:sound forKey:@"sound"];
-            }
-            
-            if (userinfo)
-            {
-                [reslut setObject:userinfo forKey:@"extras"];
-            }
+            [reslut addEntriesFromDictionary:message.convertDictionary];
             
             [resultDict setObject:@1 forKey:@"action"];
-            
-//            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
-//            {
-//                // 前台收到
-//                [resultDict setObject:@1 forKey:@"action"];
-//            }
-//            else
-//            {
-//                // 点击通知
-//                [resultDict setObject:@2 forKey:@"action"];
-//            }
         }
             break;
             
         case MPushMessageTypeClicked:
         {
-//            action = 2;
+//            [reslut addEntriesFromDictionary:message.notification.convertDictionary];
+//            [reslut setObject:message.notification.body forKey:@"content"];
+//            if (message.notification.userInfo)
+//            {
+//                [reslut setObject:message.notification.userInfo forKey:@"extras"];
+//            }
+//            reslut[@"identifier"] = message.identifier;
             
-            if (message.msgInfo)
-            {
-                NSDictionary *aps = message.msgInfo[@"aps"];
-                if ([aps isKindOfClass:[NSDictionary class]])
-                {
-                    NSDictionary *alert = aps[@"alert"];
-                    if ([alert isKindOfClass:[NSDictionary class]])
-                    {
-                        NSString *body = alert[@"body"];
-                        if (body)
-                        {
-                            [reslut setObject:body forKey:@"content"];
-                        }
-                        
-                        NSString *subtitle = alert[@"subtitle"];
-                        if (subtitle)
-                        {
-                            [reslut setObject:subtitle forKey:@"subtitle"];
-                        }
-                        
-                        NSString *title = alert[@"title"];
-                        if (title)
-                        {
-                            [reslut setObject:title forKey:@"title"];
-                        }
-                    }
-                    
-                    NSString *sound = aps[@"sound"];
-                    if (sound)
-                    {
-                        [reslut setObject:sound forKey:@"sound"];
-                    }
-                    
-                    NSInteger badge = [aps[@"badge"] integerValue];
-                    if (badge)
-                    {
-                        [reslut setObject:@(badge) forKey:@"badge"];
-                    }
-                    
-                }
-                
-                NSString *messageId = message.msgInfo[@"mobpushMessageId"];
-                if (messageId)
-                {
-                    [reslut setObject:messageId forKey:@"messageId"];
-                }
-                
-                NSMutableDictionary *extra = [NSMutableDictionary dictionary];
-                [message.msgInfo enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-                    
-                    if (![key isEqualToString:@"aps"] && ![key isEqualToString:@"mobpushMessageId"])
-                    {
-                        [extra setObject:obj forKey:key];
-                    }
-                    
-                }];
-                
-                if (extra.count)
-                {
-                    [reslut setObject:extra forKey:@"extra"];
-                }
-                
-                [resultDict setObject:@2 forKey:@"action"];
-            }
-            else
-            {
-                NSString *body = message.notification.body;
-                NSString *title = message.notification.title;
-                NSString *subtitle = message.notification.subTitle;
-                NSInteger badge = message.notification.badge;
-                NSString *sound = message.notification.sound;
-                NSDictionary *userinfo = message.msgInfo;
-                if (body)
-                {
-                    [reslut setObject:body forKey:@"content"];
-                }
-                
-                if (title)
-                {
-                    [reslut setObject:title forKey:@"title"];
-                }
-                
-                if (subtitle)
-                {
-                    [reslut setObject:subtitle forKey:@"subtitle"];
-                }
-                
-                if (badge)
-                {
-                    [reslut setObject:@(badge) forKey:@"badge"];
-                }
-                
-                if (sound)
-                {
-                    [reslut setObject:sound forKey:@"sound"];
-                }
-                
-                if (userinfo)
-                {
-                    [reslut setObject:userinfo forKey:@"extras"];
-                }
-                
-                [resultDict setObject:@2 forKey:@"action"];
-            }
+            [reslut addEntriesFromDictionary:message.convertDictionary];
+            
+            [resultDict setObject:@2 forKey:@"action"];
             
         }
             break;
