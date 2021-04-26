@@ -192,6 +192,8 @@ extern "C" {
     {
         _iosPro = iosPro == true ? YES : NO;
         [MobPush setAPNsForProduction:_iosPro];
+
+        NSLog(@"[MobPush_Plugin]: %@", [MobSDK version]);
     }
     
     void __iosMobAddPushReceiver(void *observer)
