@@ -15,6 +15,8 @@ namespace com.mob.mobpush{
 		public OnRegIdCallback onRegIdCallback;
 		public OnDemoReqCallback onDemoReqCallback;
 		public OnBindPhoneNumCallback onBindPhoneNumCallback;
+		public OnPrivacyPolicyCallback onPrivacyPolicyCallback;
+		
 
 		void Awake() {
 			#if UNITY_IPHONE
@@ -62,6 +64,12 @@ namespace com.mob.mobpush{
 					int operation = Convert.ToInt32 (res ["operation"]);
 					int errorCode = Convert.ToInt32 (res ["errorCode"]);
 					onAliasCallback (action, alias, operation, errorCode);
+				}
+			} else if (action == 5) {
+				if (onPrivacyPolicyCallback != null) {
+					string content = Convert.ToString(res ["data"]);
+					int errorCode = Convert.ToInt32 (res ["errorCode"]);
+					onPrivacyPolicyCallback (content, errorCode);
 				}
 			}
 		}
@@ -150,10 +158,6 @@ namespace com.mob.mobpush{
 			mobPushImpl.initPushSDK (appKey, appScrect);
 		}
 
-		public void updatePrivacyPermissionStatus (bool agree){
-			mobPushImpl.updatePrivacyPermissionStatus(agree);
-		}
-
 		public void stopPush() {
 			mobPushImpl.stopPush ();
 		}
@@ -227,6 +231,14 @@ namespace com.mob.mobpush{
             mobPushImpl.deleteLocalNotification(ids);
         }
 
+		public void updatePrivacyPermissionStatus (bool agree){
+			mobPushImpl.updatePrivacyPermissionStatus(agree);
+		}
+
+		public void getPrivacyPolicy(string type, string language) {
+			mobPushImpl.getPrivacyPolicy(type, language);
+		}
+
         public delegate void OnNotifyCallback (int action, Hashtable resulte);
 
 		public delegate void OnTagsCallback (int action, string[] tags, int operation, int errorCode);
@@ -238,6 +250,7 @@ namespace com.mob.mobpush{
 		public delegate void OnDemoReqCallback(bool isSuccess);
 
 		public delegate void OnBindPhoneNumCallback(bool isSuccess);
+		public delegate void OnPrivacyPolicyCallback(string content, int errorCode);
 	
 	}
 }

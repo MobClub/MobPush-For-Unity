@@ -40,6 +40,12 @@ namespace com.mob.mobpush{
 		/// </summary>
         public abstract void updatePrivacyPermissionStatus (bool agree); 
 
+		/// <summary>
+		/// get mobtech privacy policy content(url/rich content)
+		/// type 协议类型 (1= url类型, 2= 富文本类型)
+		/// </summary>
+        public abstract void getPrivacyPolicy (string type, string language); 
+
 #if UNITY_IPHONE
 		/// <summary>
         /// set APNs 环境（ios only）

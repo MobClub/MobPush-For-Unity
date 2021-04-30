@@ -18,9 +18,7 @@ public class Demo : MonoBehaviour {
 		mobPush.onDemoReqCallback = OnDemoReqHandler;
 		mobPush.onRegIdCallback = OnRegIdHandler;
 		mobPush.onBindPhoneNumCallback = OnBindPhoneNumHandler;
-
-		// 假设用户同意隐私协议许可
-		mobPush.updatePrivacyPermissionStatus(true);
+		mobPush.onPrivacyPolicyCallback = OnPrivacyPolicyHandler;
 		
 		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom (only ios)
 		#if UNITY_IPHONE
@@ -167,6 +165,25 @@ public class Demo : MonoBehaviour {
 			mobPush.bindPhoneNum ("12345678988");
 		}
 
+		#if UNITY_IPHONE
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "查询隐私协议(URL)"))
+		{
+			mobPush.getPrivacyPolicy ("1", "");
+		}
+
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "查询隐私协议(富文本)"))
+		{
+			mobPush.getPrivacyPolicy ("2", "");
+		}
+
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "上报隐私授权"))
+		{
+			mobPush.updatePrivacyPermissionStatus (true);
+		}
+		#endif
+
 #if UNITY_ANDROID
 
         btnTop += btnHeight + 20 * scale;
@@ -238,6 +255,11 @@ public class Demo : MonoBehaviour {
 	{
 		Debug.Log ("OnBindPhoneNumHandler-result:" + isSuccess);
     }
+
+	void OnPrivacyPolicyHandler(string content, int errorCode)
+	{
+		Debug.Log ("OnPrivacyPolicyHandler  content:" + content + " errorCode:" + errorCode);
+	}
 
 	void OnDemoReqHandler (bool isSuccess)
 	{

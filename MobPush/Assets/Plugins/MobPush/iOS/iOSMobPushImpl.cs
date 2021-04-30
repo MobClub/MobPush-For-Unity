@@ -80,6 +80,9 @@ namespace com.mob.mobpush
 		[DllImport("__Internal")]
 		private static extern void __iosUpdatePrivacyPermissionStatus(bool agree);
 
+		[DllImport("__Internal")]
+		private static extern void __iosGetPrivacyPolicy (string type, string language, string observer);
+
 		public iOSMobPushImpl (GameObject go)
 		{
 			Debug.Log("iOSMobPushImpl  ===>>>  iOSMobPushImpl" + go.name);
@@ -94,11 +97,6 @@ namespace com.mob.mobpush
 		public override void setAppForegroundHiddenNotification (bool hidden)
 		{
 			__iosMobPushSetAppForegroundHidden(hidden);
-		}
-
-		public override void updatePrivacyPermissionStatus (bool agree)
-		{
-			__iosUpdatePrivacyPermissionStatus(agree);
 		}
 
 		public override void initPushSDK (string appKey, string appScrect)
@@ -208,6 +206,15 @@ namespace com.mob.mobpush
 			return __iosMobPushIsPushStopped();
 		}
 
+		public override void updatePrivacyPermissionStatus (bool agree)
+		{
+			__iosUpdatePrivacyPermissionStatus(agree);
+		}
+
+		public override void getPrivacyPolicy (string type, string language)
+		{
+			__iosGetPrivacyPolicy(type, language, _gameObjectName);
+		}
 	}
 	#endif
 }

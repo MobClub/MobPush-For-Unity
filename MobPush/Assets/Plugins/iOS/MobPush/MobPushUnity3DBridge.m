@@ -65,6 +65,8 @@ extern "C" {
     extern void __iosMobPushSetAppForegroundHidden (bool hidden);
     
     extern void __iosUpdatePrivacyPermissionStatus (bool agree);
+
+    extern void __iosGetPrivacyPolicy(void *type, void*language, void *observer);
     
     BOOL _iosPro;
     
@@ -552,6 +554,45 @@ extern "C" {
         message.notification = noti;
         
         return message;
+    }
+
+    extern void __iosGetPrivacyPolicy(void *type, void *language, void *observer)
+    {
+        NSString *observerStr = nil;
+        if (observer)
+        {
+            observerStr = [NSString stringWithCString:observer encoding:NSUTF8StringEncoding];
+        }
+        
+        NSString *typeParam = [NSString stringWithCString:type encoding:NSUTF8StringEncoding];
+        NSString *languageParam = [NSString stringWithCString:language encoding:NSUTF8StringEncoding];
+
+        [MobSDK getPrivacyPolicy:typeParam language:languageParam compeletion:^(NSDictionary * _Nullable data, NSError * _Nullable error) {
+            if (error == nil)
+            {
+                NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
+                // action = 5 ，获取隐私协议
+                [resultDict setObject:@5 forKey:@"action"];
+                if (error)
+                {
+                    [resultDict setObject:@(error.code) forKey:@"errorCode"];
+                }
+                else
+                {
+                    [resultDict setObject:@(0) forKey:@"errorCode"];
+                }
+
+                if (data)
+                {
+                    // 转成 json 字符串
+                    NSString *dataStr = [MOBFJson jsonStringFromObject:data];
+                    [resultDict setObject:dataStr forKey:@"dataStr"];
+                }
+                // 转成 json 字符串
+                NSString *resultStr = [MOBFJson jsonStringFromObject:data];
+                UnitySendMessage([observerStr UTF8String], "_MobPushCallback", [resultStr UTF8String]);
+            }
+        }];
     }
     
 #if defined (__cplusplus)
