@@ -121,7 +121,27 @@ namespace com.mob.mobpush{
                 onBindPhoneNumCallback(isSuccess==1?true:false);
 			}
 		}
+		//获取隐私内容回调
+		private void _MobPushPrivacyPolicyCallback(string result)
+		{
+			if (result == null)
+			{
+				return;
+			}
+			Debug.Log("_MobPushPrivacyPolicyCallback-result:" + result);
 
+			Hashtable res = (Hashtable)MiniJSON.jsonDecode(result);
+			if (res == null || res.Count <= 0)
+			{
+				return;
+			}
+			String content = Convert.ToString(res["data"]);
+			int errorCode= Convert.ToInt32(res["errorCode"]);
+			if (onPrivacyPolicyCallback != null)
+			{
+				onPrivacyPolicyCallback(content,errorCode);
+			}
+		}
 #if UNITY_IPHONE
 
 		public void setAPNsForProduction (bool isPro) {
@@ -139,8 +159,8 @@ namespace com.mob.mobpush{
 #endif
 
 
-#if UNITY_ANDROID 
-		
+#if UNITY_ANDROID
+
 		public void setClickNotificationToLaunchPage(bool isOpen) {
 			mobPushImpl.setClickNotificationToLaunchPage (isOpen);
 		}

@@ -165,7 +165,6 @@ public class Demo : MonoBehaviour {
 			mobPush.bindPhoneNum ("12345678988");
 		}
 
-		#if UNITY_IPHONE
 		btnTop += btnHeight + 20 * scale;
 		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "查询隐私协议(URL)"))
 		{
@@ -182,7 +181,6 @@ public class Demo : MonoBehaviour {
 		{
 			mobPush.updatePrivacyPermissionStatus (true);
 		}
-		#endif
 
 #if UNITY_ANDROID
 

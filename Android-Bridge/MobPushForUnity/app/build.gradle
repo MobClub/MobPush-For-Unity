@@ -46,3 +46,17 @@ MobSDK {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 }
+task makeJar(type:Copy) {
+    delete 'build/libs/MobPushU3D.jar'
+    from('build/intermediates/packaged-classes/release/')
+    into('build/libs/')
+    //筛选，只要这个jar
+    include('classes.jar')
+    //去掉不需要的内容
+    exclude('test/','BuildConfig','R.class')
+    //去掉R文件
+    exclude{it.name.startsWith('R$');}
+    //重命名
+    rename ('classes.jar', 'MobPushU3D.jar')
+}
+makeJar.dependsOn(build)

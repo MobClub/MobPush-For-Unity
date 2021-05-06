@@ -185,6 +185,14 @@ namespace com.mob.mobpush
 				javaObj.Call ("deleteLocalNotification",stringIds);
 			}
 		}
-	}
+        public override void getPrivacyPolicy(string type, string language)
+        {
+            Debug.Log("AndroidImpl  ===>>>  getPrivacyPolicy === ");
+            if (javaObj != null)
+            {
+                javaObj.Call("getPrivacyPolicy", type, language, "_MobPushPrivacyPolicyCallback");
+            }
+        }
+    }
 #endif
 }
