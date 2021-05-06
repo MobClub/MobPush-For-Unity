@@ -65,12 +65,6 @@ namespace com.mob.mobpush{
 					int errorCode = Convert.ToInt32 (res ["errorCode"]);
 					onAliasCallback (action, alias, operation, errorCode);
 				}
-			} else if (action == 5) {
-				if (onPrivacyPolicyCallback != null) {
-					string content = Convert.ToString(res ["data"]);
-					int errorCode = Convert.ToInt32 (res ["errorCode"]);
-					onPrivacyPolicyCallback (content, errorCode);
-				}
 			}
 		}
 

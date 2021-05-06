@@ -572,7 +572,7 @@ extern "C" {
             {
                 NSMutableDictionary *resultDict = [NSMutableDictionary dictionary];
                 // action = 5 ，获取隐私协议
-                [resultDict setObject:@5 forKey:@"action"];
+                // [resultDict setObject:@5 forKey:@"action"];
                 if (error)
                 {
                     [resultDict setObject:@(error.code) forKey:@"errorCode"];
@@ -586,11 +586,11 @@ extern "C" {
                 {
                     // 转成 json 字符串
                     NSString *dataStr = [MOBFJson jsonStringFromObject:data];
-                    [resultDict setObject:dataStr forKey:@"dataStr"];
+                    [resultDict setObject:dataStr forKey:@"data"];
                 }
                 // 转成 json 字符串
-                NSString *resultStr = [MOBFJson jsonStringFromObject:data];
-                UnitySendMessage([observerStr UTF8String], "_MobPushCallback", [resultStr UTF8String]);
+                NSString *resultStr = [MOBFJson jsonStringFromObject:resultDict];
+                UnitySendMessage([observerStr UTF8String], "_MobPushPrivacyPolicyCallback", [resultStr UTF8String]);
             }
         }];
     }
