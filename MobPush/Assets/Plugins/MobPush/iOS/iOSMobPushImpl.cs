@@ -99,6 +99,11 @@ namespace com.mob.mobpush
 			__iosMobPushSetAppForegroundHidden(hidden);
 		}
 
+		public override void updatePrivacyPermissionStatus (bool agree)
+		{
+			__iosUpdatePrivacyPermissionStatus(agree);
+		}
+
 		public override void initPushSDK (string appKey, string appScrect)
 		{
 			 __iosMobPushInitPushSDK(appKey, appScrect);
@@ -204,11 +209,6 @@ namespace com.mob.mobpush
 		public override bool isPushStopped()
 		{
 			return __iosMobPushIsPushStopped();
-		}
-
-		public override void updatePrivacyPermissionStatus (bool agree)
-		{
-			__iosUpdatePrivacyPermissionStatus(agree);
 		}
 
 		public override void getPrivacyPolicy (string type, string language)

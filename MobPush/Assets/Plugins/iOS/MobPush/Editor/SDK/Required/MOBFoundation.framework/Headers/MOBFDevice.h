@@ -61,14 +61,6 @@ typedef NS_ENUM(NSUInteger, MOBFIPVersion)
  */
 @interface MOBFDevice : NSObject
 
-
-/**
- *  获取单例的 CTTelephonyNetworkInfo
- *
- *  @return CTTelephonyNetworkInfo
- */
-+ (CTTelephonyNetworkInfo *)networkInfo;
-
 /**
  *  获取网卡物理地址
  *
@@ -89,13 +81,6 @@ typedef NS_ENUM(NSUInteger, MOBFIPVersion)
  *  @return 网络类型
  */
 + (MOBFNetworkType)currentNetworkType;
-
-/**
- *  获取当前网络类型字符串
- *
- *  @return 网络类型
- */
-+ (NSString *)currentNetworkTypeStr;
 
 /**
  *  获取手机运营商代码
