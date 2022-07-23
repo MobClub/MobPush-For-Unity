@@ -27,7 +27,7 @@ public class Demo : MonoBehaviour {
 			mobPush.setAPNsForProduction(false);
 
 			CustomNotifyStyle style = new CustomNotifyStyle ();
-		style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
+		style.setType(AuthorizationType.Badge | AuthorizationType.Sound | AuthorizationType.Alert);
 			mobPush.setCustomNotification(style);
 
 		#endif
@@ -97,7 +97,7 @@ public class Demo : MonoBehaviour {
 
 		#if UNITY_IPHONE
 
-			style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
+			style.setType(AuthorizationType.Badge | AuthorizationType.Sound | AuthorizationType.Alert);
 
 		#elif UNITY_ANDROID
 
