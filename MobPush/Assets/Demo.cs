@@ -18,9 +18,7 @@ public class Demo : MonoBehaviour {
 		mobPush.onDemoReqCallback = OnDemoReqHandler;
 		mobPush.onRegIdCallback = OnRegIdHandler;
 		mobPush.onBindPhoneNumCallback = OnBindPhoneNumHandler;
-
-		// 假设用户同意隐私协议许可
-		mobPush.updatePrivacyPermissionStatus(true);
+		mobPush.onPrivacyPolicyCallback = OnPrivacyPolicyHandler;
 		
 		// IPHONE 要想收到 APNs 和本地通知，必须先要 setCustom (only ios)
 		#if UNITY_IPHONE
@@ -29,7 +27,7 @@ public class Demo : MonoBehaviour {
 			mobPush.setAPNsForProduction(false);
 
 			CustomNotifyStyle style = new CustomNotifyStyle ();
-		style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
+		style.setType(AuthorizationType.Badge | AuthorizationType.Sound | AuthorizationType.Alert);
 			mobPush.setCustomNotification(style);
 
 		#endif
@@ -99,7 +97,7 @@ public class Demo : MonoBehaviour {
 
 		#if UNITY_IPHONE
 
-			style.setType(CustomNotifyStyle.AuthorizationType.Badge | CustomNotifyStyle.AuthorizationType.Sound | CustomNotifyStyle.AuthorizationType.Alert);
+			style.setType(AuthorizationType.Badge | AuthorizationType.Sound | AuthorizationType.Alert);
 
 		#elif UNITY_ANDROID
 
@@ -165,6 +163,23 @@ public class Demo : MonoBehaviour {
         if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "bindPhoneNum"))
 		{
 			mobPush.bindPhoneNum ("12345678988");
+		}
+
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "查询隐私协议(URL)"))
+		{
+			mobPush.getPrivacyPolicy ("1", "");
+		}
+
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 + btnGap, btnTop, btnWidth, btnHeight), "查询隐私协议(富文本)"))
+		{
+			mobPush.getPrivacyPolicy ("2", "");
+		}
+
+		btnTop += btnHeight + 20 * scale;
+		if (GUI.Button(new Rect((Screen.width - btnGap) / 2 - btnWidth, btnTop, btnWidth, btnHeight), "上报隐私授权"))
+		{
+			mobPush.updatePrivacyPermissionStatus (true);
 		}
 
 #if UNITY_ANDROID
@@ -238,6 +253,11 @@ public class Demo : MonoBehaviour {
 	{
 		Debug.Log ("OnBindPhoneNumHandler-result:" + isSuccess);
     }
+
+	void OnPrivacyPolicyHandler(string content, int errorCode)
+	{
+		Debug.Log ("OnPrivacyPolicyHandler  content:" + content + " errorCode:" + errorCode);
+	}
 
 	void OnDemoReqHandler (bool isSuccess)
 	{

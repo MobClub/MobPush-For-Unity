@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.mob.MobSDK;
 import com.mob.OperationCallback;
+import com.mob.PrivacyPolicy;
 import com.mob.pushsdk.MobPush;
 import com.mob.pushsdk.MobPushLocalNotification;
 import com.mob.tools.utils.Hashon;
@@ -12,6 +13,7 @@ import com.mob.tools.utils.ResHelper;
 import com.mob.unity3d.listener.MobPushBindPhoneNumCallback;
 import com.mob.unity3d.listener.MobPushDemoListener;
 import com.mob.unity3d.listener.MobPushListener;
+import com.mob.unity3d.listener.MobPushPrivacyPolicyCallback;
 import com.mob.unity3d.listener.MobPushRegIdCallback;
 import com.unity3d.player.UnityPlayer;
 
@@ -19,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
@@ -35,6 +38,9 @@ public class MobPushUtils {
     private static String u3dBindPhoneNumCallback;
     private static Context context;
     private Hashon hashon = new Hashon();
+
+    public MobPushUtils() {
+    }
 
     public MobPushUtils(final String gameObject, final String u3dCallback, String u3dDemoCallback, String u3dRegIdCallback, String u3dBindPhoneNumCallback) {
         if (DEBUG) {
@@ -403,5 +409,24 @@ public class MobPushUtils {
                 System.out.println("submitPolicyGrantResult onFailure:" + throwable);
             }
         });
+    }
+
+    /**
+     * 获取隐私协议内容
+     * @param type
+     * @param language
+     * @param onPrivacyPolicyCallback
+     */
+    public void getPrivacyPolicy(String type, String language, String onPrivacyPolicyCallback) {
+        if (DEBUG) {
+            System.out.println("getPrivacyPolicy type=" + type + ";language=" + language + ";onPrivacyPolicyCallback=" + onPrivacyPolicyCallback);
+        }
+        int tempType = 1;
+        try {
+            tempType = Integer.parseInt(type);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        MobSDK.getPrivacyPolicyAsync(tempType, TextUtils.isEmpty(language) ? null : new Locale(language), new MobPushPrivacyPolicyCallback(onPrivacyPolicyCallback, u3dGameObject));
     }
 }
