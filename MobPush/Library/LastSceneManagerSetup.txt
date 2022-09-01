@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/MobPushForUnity.unity
-  isLoaded: 0
-  isActive: 0
